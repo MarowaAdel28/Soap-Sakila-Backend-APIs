@@ -20,7 +20,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+//@ToString
 @Embeddable
 public class FilmActorPK implements Serializable {
 

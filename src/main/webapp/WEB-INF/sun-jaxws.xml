@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime" version="2.0">
+    <endpoint
+            name="ActorWebService"
+            implementation="gov.iti.jets.api.soap.services.ActorWebService"
+            url-pattern="/soap/actor" />
 
-    
-
+<!--    <endpoint-->
+<!--            name="PaymentWebService"-->
+<!--            implementation="gov.iti.services.PaymentWebService"-->
+<!--            url-pattern="/ws2/payment" />-->
 </endpoints>

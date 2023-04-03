@@ -21,7 +21,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+//@ToString
 @Embeddable
 public class FilmCategoryPK implements Serializable {
 
