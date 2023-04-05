@@ -78,4 +78,27 @@ public class ActorDAO extends BaseDAO<Actor>{
                 ).toList();
         return filmActorList;
     }
+
+    public int getActorFilmCount(short actorId) {
+        Actor actor = get(actorId);
+        return actor.getFilmActorList().size();
+    }
+
+    public int getActorFilmCountByLanguage(short actorId, String languageName) {
+        Actor actor = get(actorId);
+        List<FilmActor> filmActorList = actor.getFilmActorList().stream()
+                .filter((film)->
+                        film.getFilm().getLanguageId().getName().equals(languageName)
+                ).toList();
+        return filmActorList.size();
+    }
+
+    public int getActorFilmCountByRating(short actorId, String rate) {
+        Actor actor = get(actorId);
+        List<FilmActor> filmActorList = actor.getFilmActorList().stream()
+                .filter((film)->
+                        film.getFilm().getRating().equals(rate)
+                ).toList();
+        return filmActorList.size();
+    }
 }

@@ -1,6 +1,8 @@
 package gov.iti.jets.api.soap.services;
 
 import gov.iti.jets.dao.ActorDAO;
+import gov.iti.jets.dto.ActorDto;
+import gov.iti.jets.dto.FilmActorDto;
 import gov.iti.jets.entity.Actor;
 import gov.iti.jets.entity.FilmActor;
 import gov.iti.jets.service.ActorService;
@@ -13,47 +15,45 @@ import java.util.List;
 public class ActorWebService {
     private ActorService actorService = ActorService.getInstance();
 
-    public List<Actor> getActorList() {
+    public String getActorList() {
 
-        return actorService.getActorList();
+        return actorService.getActorList().get(0).getFirstName();
     }
-    public Actor getActorById(Short actorId) {
-        Actor actor = actorService.getActorById(actorId);
-//        System.out.println(actor);
-        return actor;
+    public ActorDto getActorById(Short actorId) {
+        return actorService.getActorById(actorId);
     }
 
-    public  List<Actor> searchActorByName(String name) {
+    public  List<ActorDto> searchActorByName(String name) {
         return  actorService.searchActorByName(name);
     }
 
-    public List<FilmActor> getActorFilmList(short id) {
+    public List<FilmActorDto> getActorFilmList(short id) {
         return actorService.getActorFilmList(id);
     }
-    public List<FilmActor> getActorFilmListByLanguage(short id, String language) {
+    public List<FilmActorDto> getActorFilmListByLanguage(short id, String language) {
         return actorService.getActorFilmListByLanguage(id, language);
     }
-    public List<FilmActor> getActorFilmListByRating(short id,String rating) {
+    public List<FilmActorDto> getActorFilmListByRating(short id,String rating) {
         return actorService.getActorFilmListByRating(id,rating);
     }
 
-//    public Actor getActorByName(String fname, String lname) {
-//        Actor actor = actorService.getActorByName(fname,lname);
-////        System.out.println(actor);
-//        return actor;
-//    }
-    public List<FilmActor> getActorFilmList(String fname, String lname) {
+    public List<FilmActorDto> getActorFilmList(String fname, String lname) {
         return actorService.getActorFilmList(fname,lname);
     }
-    public List<FilmActor> getActorFilmListByLanguage(String fname, String lname, String language) {
+    public List<FilmActorDto> getActorFilmListByLanguage(String fname, String lname, String language) {
         return actorService.getActorFilmListByLanguage(fname,lname, language);
     }
-    public List<FilmActor> getActorFilmListByRating(String fname, String lname,String rating) {
+    public List<FilmActorDto> getActorFilmListByRating(String fname, String lname,String rating) {
         return actorService.getActorFilmListByRating(fname,lname,rating);
     }
 
-//
-//    public String hello() {
-//        return "hello";
-//    }
+    public int getActorFilmCount(short id) {
+        return actorService.getActorFilmCount(id);
+    }
+    public int getActorFilmCountByLanguage(short id, String language) {
+        return actorService.getActorFilmCountByLanguage(id, language);
+    }
+    public int getActorFilmCountByRating(short id,String rating) {
+        return actorService.getActorFilmCountByRating(id,rating);
+    }
 }

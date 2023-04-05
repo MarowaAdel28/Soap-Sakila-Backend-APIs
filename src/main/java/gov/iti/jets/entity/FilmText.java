@@ -32,7 +32,7 @@ import lombok.*;
     @NamedQuery(name = "FilmText.findAll", query = "SELECT f FROM FilmText f")
     , @NamedQuery(name = "FilmText.findByFilmId", query = "SELECT f FROM FilmText f WHERE f.filmId = :filmId")
     , @NamedQuery(name = "FilmText.findByTitle", query = "SELECT f FROM FilmText f WHERE f.title = :title")})
-public class FilmText implements Serializable {
+public class FilmText extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

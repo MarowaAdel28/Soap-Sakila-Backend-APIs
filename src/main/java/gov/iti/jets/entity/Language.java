@@ -42,7 +42,7 @@ import lombok.*;
     , @NamedQuery(name = "Language.findByLanguageId", query = "SELECT l FROM Language l WHERE l.languageId = :languageId")
     , @NamedQuery(name = "Language.findByName", query = "SELECT l FROM Language l WHERE l.name = :name")
     , @NamedQuery(name = "Language.findByLastUpdate", query = "SELECT l FROM Language l WHERE l.lastUpdate = :lastUpdate")})
-public class Language implements Serializable {
+public class Language extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

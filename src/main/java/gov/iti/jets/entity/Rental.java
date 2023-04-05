@@ -44,7 +44,7 @@ import lombok.*;
     , @NamedQuery(name = "Rental.findByRentalDate", query = "SELECT r FROM Rental r WHERE r.rentalDate = :rentalDate")
     , @NamedQuery(name = "Rental.findByReturnDate", query = "SELECT r FROM Rental r WHERE r.returnDate = :returnDate")
     , @NamedQuery(name = "Rental.findByLastUpdate", query = "SELECT r FROM Rental r WHERE r.lastUpdate = :lastUpdate")})
-public class Rental implements Serializable {
+public class Rental extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

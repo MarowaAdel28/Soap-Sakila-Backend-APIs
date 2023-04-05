@@ -48,7 +48,7 @@ import lombok.*;
     , @NamedQuery(name = "Customer.findByActive", query = "SELECT c FROM Customer c WHERE c.active = :active")
     , @NamedQuery(name = "Customer.findByCreateDate", query = "SELECT c FROM Customer c WHERE c.createDate = :createDate")
     , @NamedQuery(name = "Customer.findByLastUpdate", query = "SELECT c FROM Customer c WHERE c.lastUpdate = :lastUpdate")})
-public class Customer implements Serializable {
+public class Customer extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
