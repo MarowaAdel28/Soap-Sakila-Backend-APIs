@@ -44,7 +44,7 @@ import lombok.*;
     @NamedQuery(name = "Inventory.findAll", query = "SELECT i FROM Inventory i")
     , @NamedQuery(name = "Inventory.findByInventoryId", query = "SELECT i FROM Inventory i WHERE i.inventoryId = :inventoryId")
     , @NamedQuery(name = "Inventory.findByLastUpdate", query = "SELECT i FROM Inventory i WHERE i.lastUpdate = :lastUpdate")})
-public class Inventory implements Serializable {
+public class Inventory extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

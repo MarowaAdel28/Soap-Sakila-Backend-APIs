@@ -42,7 +42,7 @@ import lombok.*;
     , @NamedQuery(name = "Payment.findByAmount", query = "SELECT p FROM Payment p WHERE p.amount = :amount")
     , @NamedQuery(name = "Payment.findByPaymentDate", query = "SELECT p FROM Payment p WHERE p.paymentDate = :paymentDate")
     , @NamedQuery(name = "Payment.findByLastUpdate", query = "SELECT p FROM Payment p WHERE p.lastUpdate = :lastUpdate")})
-public class Payment implements Serializable {
+public class Payment extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

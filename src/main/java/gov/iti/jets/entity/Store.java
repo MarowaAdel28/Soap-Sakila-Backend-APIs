@@ -44,7 +44,7 @@ import lombok.*;
     @NamedQuery(name = "Store.findAll", query = "SELECT s FROM Store s")
     , @NamedQuery(name = "Store.findByStoreId", query = "SELECT s FROM Store s WHERE s.storeId = :storeId")
     , @NamedQuery(name = "Store.findByLastUpdate", query = "SELECT s FROM Store s WHERE s.lastUpdate = :lastUpdate")})
-public class Store implements Serializable {
+public class Store extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

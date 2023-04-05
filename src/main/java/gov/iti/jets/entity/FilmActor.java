@@ -38,7 +38,7 @@ import lombok.*;
     , @NamedQuery(name = "FilmActor.findByActorId", query = "SELECT f FROM FilmActor f WHERE f.filmActorPK.actorId = :actorId")
     , @NamedQuery(name = "FilmActor.findByFilmId", query = "SELECT f FROM FilmActor f WHERE f.filmActorPK.filmId = :filmId")
     , @NamedQuery(name = "FilmActor.findByLastUpdate", query = "SELECT f FROM FilmActor f WHERE f.lastUpdate = :lastUpdate")})
-public class FilmActor implements Serializable {
+public class FilmActor extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

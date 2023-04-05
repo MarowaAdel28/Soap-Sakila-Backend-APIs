@@ -46,7 +46,7 @@ import lombok.*;
     , @NamedQuery(name = "Address.findByPostalCode", query = "SELECT a FROM Address a WHERE a.postalCode = :postalCode")
     , @NamedQuery(name = "Address.findByPhone", query = "SELECT a FROM Address a WHERE a.phone = :phone")
     , @NamedQuery(name = "Address.findByLastUpdate", query = "SELECT a FROM Address a WHERE a.lastUpdate = :lastUpdate")})
-public class Address implements Serializable {
+public class Address extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

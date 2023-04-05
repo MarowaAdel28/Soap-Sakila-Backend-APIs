@@ -42,7 +42,7 @@ import lombok.*;
     , @NamedQuery(name = "City.findByCityId", query = "SELECT c FROM City c WHERE c.cityId = :cityId")
     , @NamedQuery(name = "City.findByCity", query = "SELECT c FROM City c WHERE c.city = :city")
     , @NamedQuery(name = "City.findByLastUpdate", query = "SELECT c FROM City c WHERE c.lastUpdate = :lastUpdate")})
-public class City implements Serializable {
+public class City extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
