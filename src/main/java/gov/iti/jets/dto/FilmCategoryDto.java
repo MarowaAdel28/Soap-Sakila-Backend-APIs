@@ -1,6 +1,9 @@
 package gov.iti.jets.dto;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,9 +12,12 @@ import java.util.Date;
  * A DTO for the {@link gov.iti.jets.entity.FilmCategory} entity
  */
 @Data
-public class FilmCategoryDto extends BaseDto implements Serializable {
-    private final FilmCategoryPKDto filmCategoryPK;
-    private final Date lastUpdate;
+@NoArgsConstructor
+@AllArgsConstructor
+@XmlRootElement
+public class FilmCategoryDto implements Serializable {
+    private FilmCategoryPKDto filmCategoryPK;
+    private Date lastUpdate;
 
     /**
      * A DTO for the {@link gov.iti.jets.entity.FilmCategoryPK} entity

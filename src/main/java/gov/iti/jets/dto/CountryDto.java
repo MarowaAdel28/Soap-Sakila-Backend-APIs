@@ -1,6 +1,9 @@
 package gov.iti.jets.dto;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,8 +12,11 @@ import java.util.Date;
  * A DTO for the {@link gov.iti.jets.entity.Country} entity
  */
 @Data
-public class CountryDto extends BaseDto implements Serializable {
-    private final Short countryId;
-    private final String country;
-    private final Date lastUpdate;
+@NoArgsConstructor
+@AllArgsConstructor
+@XmlRootElement
+public class CountryDto implements Serializable {
+    private Short countryId;
+    private String country;
+    private Date lastUpdate;
 }

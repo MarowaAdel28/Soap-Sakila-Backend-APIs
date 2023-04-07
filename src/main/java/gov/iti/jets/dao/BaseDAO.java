@@ -5,6 +5,8 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.criteria.CriteriaBuilder;
 
+import java.util.List;
+
 
 public abstract class BaseDAO <E extends Object>{
 
@@ -32,7 +34,7 @@ public abstract class BaseDAO <E extends Object>{
 
     public E get(Short id)
     {
-      return entityManager.find(entity,id);
+        return entityManager.find(entity,id);
     }
 
     public boolean update(E entity)

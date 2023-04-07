@@ -1,12 +1,11 @@
 package gov.iti.jets.api.soap.services;
 
-import gov.iti.jets.dao.ActorDAO;
 import gov.iti.jets.dto.ActorDto;
 import gov.iti.jets.dto.FilmActorDto;
-import gov.iti.jets.entity.Actor;
-import gov.iti.jets.entity.FilmActor;
+import gov.iti.jets.dto.FilmDto;
 import gov.iti.jets.service.ActorService;
 import jakarta.jws.WebMethod;
+import jakarta.jws.WebParam;
 import jakarta.jws.WebService;
 
 import java.util.List;
@@ -15,45 +14,46 @@ import java.util.List;
 public class ActorWebService {
     private ActorService actorService = ActorService.getInstance();
 
-    public String getActorList() {
+    @WebMethod(operationName = "AllActors")
+    public List<ActorDto> getActorList() {
 
-        return actorService.getActorList().get(0).getFirstName();
+        List<ActorDto> actorDtoList = actorService.getActorList();
+        System.out.println(actorDtoList);
+        return actorDtoList;
     }
-    public ActorDto getActorById(Short actorId) {
+    @WebMethod(operationName = "ActorById")
+    public ActorDto getActorById(@WebParam(name = "actorId") Short actorId) {
         return actorService.getActorById(actorId);
     }
 
-    public  List<ActorDto> searchActorByName(String name) {
+    @WebMethod(operationName = "searchByName")
+    public  List<ActorDto> searchActorByName(@WebParam(name = "actorName")String name) {
         return  actorService.searchActorByName(name);
     }
 
-    public List<FilmActorDto> getActorFilmList(short id) {
+    @WebMethod(operationName = "AllActorFilms")
+    public List<FilmDto> getActorFilmList(@WebParam(name = "actorId") short id) {
         return actorService.getActorFilmList(id);
     }
-    public List<FilmActorDto> getActorFilmListByLanguage(short id, String language) {
+    @WebMethod(operationName = "ActorFilmsByLanguage")
+    public List<FilmDto> getActorFilmListByLanguage(@WebParam(name = "actorId") short id, @WebParam(name = "language")String language) {
         return actorService.getActorFilmListByLanguage(id, language);
     }
-    public List<FilmActorDto> getActorFilmListByRating(short id,String rating) {
+    @WebMethod(operationName = "ActorFilmsByRating")
+    public List<FilmDto> getActorFilmListByRating(@WebParam(name = "actorId") short id, @WebParam(name = "rate") String rating) {
         return actorService.getActorFilmListByRating(id,rating);
     }
 
-    public List<FilmActorDto> getActorFilmList(String fname, String lname) {
-        return actorService.getActorFilmList(fname,lname);
-    }
-    public List<FilmActorDto> getActorFilmListByLanguage(String fname, String lname, String language) {
-        return actorService.getActorFilmListByLanguage(fname,lname, language);
-    }
-    public List<FilmActorDto> getActorFilmListByRating(String fname, String lname,String rating) {
-        return actorService.getActorFilmListByRating(fname,lname,rating);
-    }
-
-    public int getActorFilmCount(short id) {
+    @WebMethod(operationName = "NoOfFilms")
+    public int getActorFilmCount(@WebParam(name = "actorId") short id) {
         return actorService.getActorFilmCount(id);
     }
-    public int getActorFilmCountByLanguage(short id, String language) {
+    @WebMethod(operationName = "NoOfFilmsByLanguage")
+    public int getActorFilmCountByLanguage(@WebParam(name = "actorId") short id, @WebParam(name = "language") String language) {
         return actorService.getActorFilmCountByLanguage(id, language);
     }
-    public int getActorFilmCountByRating(short id,String rating) {
+    @WebMethod(operationName = "NoOfFilmsByRating")
+    public int getActorFilmCountByRating(@WebParam(name = "actorId") short id, @WebParam(name = "rate") String rating) {
         return actorService.getActorFilmCountByRating(id,rating);
     }
 }
