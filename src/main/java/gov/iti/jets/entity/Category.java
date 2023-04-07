@@ -47,13 +47,16 @@ public class Category extends BaseEntity implements Serializable {
     @Basic(optional = false)
     @Column(name = "category_id")
     private Short categoryId;
+
     @Basic(optional = false)
     @Column(name = "name")
     private String name;
+
     @Basic(optional = false)
     @Column(name = "last_update")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdate;
+
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<FilmCategory> filmCategoryList;
 

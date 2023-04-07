@@ -1,6 +1,9 @@
 package gov.iti.jets.dto;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -9,17 +12,20 @@ import java.util.Date;
 /**
  * A DTO for the {@link gov.iti.jets.entity.Film} entity
  */
+@XmlRootElement
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
-public class FilmDto extends BaseDto implements Serializable {
-    private final Short filmId;
-    private final String title;
-    private final String description;
-    private final Date releaseYear;
-    private final short rentalDuration;
-    private final BigDecimal rentalRate;
-    private final Short length;
-    private final BigDecimal replacementCost;
-    private final String rating;
-    private final String specialFeatures;
-    private final Date lastUpdate;
+public class FilmDto implements Serializable {
+    private Short filmId;
+    private String title;
+    private String description;
+    private Date releaseYear;
+    private short rentalDuration;
+    private BigDecimal rentalRate;
+    private Short length;
+    private BigDecimal replacementCost;
+    private String rating;
+    private String specialFeatures;
+    private Date lastUpdate;
 }

@@ -1,6 +1,9 @@
 package gov.iti.jets.dto;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,12 +12,15 @@ import java.util.Date;
  * A DTO for the {@link gov.iti.jets.entity.Customer} entity
  */
 @Data
-public class CustomerDto extends BaseDto implements Serializable {
-    private final Short customerId;
-    private final String firstName;
-    private final String lastName;
-    private final String email;
-    private final boolean active;
-    private final Date createDate;
-    private final Date lastUpdate;
+@NoArgsConstructor
+@AllArgsConstructor
+@XmlRootElement
+public class CustomerDto implements Serializable {
+    private Short customerId;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private boolean active;
+    private Date createDate;
+    private Date lastUpdate;
 }
