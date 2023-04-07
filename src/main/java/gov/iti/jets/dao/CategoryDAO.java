@@ -21,7 +21,7 @@ public class CategoryDAO extends BaseDAO<Category>{
     public List<Category> searchByCategoryName(String name) {
         String queryString = "from Category c where c.name like :name";
         Query q = entityManager.createQuery(queryString)
-                .setParameter("name", name);
+                .setParameter("name", name.toUpperCase());
         return (List<Category>) q.getResultList();
     }
 }

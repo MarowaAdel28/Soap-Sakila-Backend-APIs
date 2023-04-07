@@ -1,6 +1,7 @@
 package gov.iti.jets.api.soap.services;
 
 import gov.iti.jets.dto.ActorDto;
+import gov.iti.jets.dto.AddingActorDto;
 import gov.iti.jets.dto.FilmActorDto;
 import gov.iti.jets.dto.FilmDto;
 import gov.iti.jets.service.ActorService;
@@ -16,10 +17,7 @@ public class ActorWebService {
 
     @WebMethod(operationName = "AllActors")
     public List<ActorDto> getActorList() {
-
-        List<ActorDto> actorDtoList = actorService.getActorList();
-        System.out.println(actorDtoList);
-        return actorDtoList;
+        return actorService.getActorList();
     }
     @WebMethod(operationName = "ActorById")
     public ActorDto getActorById(@WebParam(name = "actorId") Short actorId) {
@@ -55,5 +53,15 @@ public class ActorWebService {
     @WebMethod(operationName = "NoOfFilmsByRating")
     public int getActorFilmCountByRating(@WebParam(name = "actorId") short id, @WebParam(name = "rate") String rating) {
         return actorService.getActorFilmCountByRating(id,rating);
+    }
+
+    @WebMethod(operationName = "AddNewActor")
+    public boolean addActor(@WebParam(name = "ActorObject") AddingActorDto actorDto) {
+        return actorService.addActor(actorDto);
+    }
+
+    @WebMethod(operationName = "EditActor")
+    public boolean editActor(@WebParam(name = "ActorObject") ActorDto actorDto) {
+        return actorService.editActor(actorDto);
     }
 }

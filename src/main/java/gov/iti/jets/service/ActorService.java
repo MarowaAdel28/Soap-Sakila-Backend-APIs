@@ -2,13 +2,16 @@ package gov.iti.jets.service;
 
 import gov.iti.jets.dao.ActorDAO;
 import gov.iti.jets.dto.ActorDto;
+import gov.iti.jets.dto.AddingActorDto;
 import gov.iti.jets.dto.FilmDto;
 import gov.iti.jets.entity.Actor;
 import gov.iti.jets.entity.FilmActor;
 import gov.iti.jets.mapper.ActorMapper;
+import gov.iti.jets.mapper.AddingActorMapper;
 import gov.iti.jets.mapper.FilmMapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.Date;
 import java.util.List;
 
 public class ActorService {
@@ -17,6 +20,8 @@ public class ActorService {
     private ActorMapper actorMapper;
 
     private FilmMapper filmMapper;
+
+    private AddingActorMapper addingActorMapper;
 
     public static ActorService getInstance() {
         if (actorService == null) {
@@ -32,6 +37,7 @@ public class ActorService {
     private ActorService() {
         actorMapper = Mappers.getMapper(ActorMapper.class);
         filmMapper = Mappers.getMapper(FilmMapper.class);
+        addingActorMapper = Mappers.getMapper(AddingActorMapper.class);
     }
 
     // get all actors
@@ -122,6 +128,18 @@ public class ActorService {
         return actorDAO.getActorFilmCountByRating(id, rating);
     }
 
+    public boolean addActor(AddingActorDto actorDto) {
+        Actor actor = addingActorMapper.toEntity(actorDto);
+        ActorDAO actorDAO = new ActorDAO();
+        actor.setLastUpdate(new Date());
+        return actorDAO.save(actor);
+    }
 
+    public boolean editActor(ActorDto actorDto) {
+        Actor actor = actorMapper.toEntity(actorDto);
+        ActorDAO actorDAO = new ActorDAO();
+        actor.setLastUpdate(new Date());
+        return actorDAO.update(actor);
+    }
 
 }
