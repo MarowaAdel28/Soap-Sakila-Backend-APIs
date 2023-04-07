@@ -5,6 +5,21 @@
             implementation="gov.iti.jets.api.soap.services.ActorWebService"
             url-pattern="/soap/actor" />
 
+    <endpoint
+            name="CategoryWebService"
+            implementation="gov.iti.jets.api.soap.services.CategoryWebService"
+            url-pattern="/soap/category" />
+
+    <endpoint
+            name="FilmWebService"
+            implementation="gov.iti.jets.api.soap.services.FilmWebService"
+            url-pattern="/soap/film" />
+
+    <endpoint
+            name="CustomerWebService"
+            implementation="gov.iti.jets.api.soap.services.CustomerWebService"
+            url-pattern="/soap/customer" />
+
 <!--    <endpoint-->
 <!--            name="PaymentWebService"-->
 <!--            implementation="gov.iti.services.PaymentWebService"-->

@@ -20,8 +20,8 @@ public class ActorDAO extends BaseDAO<Actor>{
     public List<Actor> searchActorByName(String name) {
         String queryString = "from Actor a where a.firstName like :fname or a.lastName like :lname";
         Query q = entityManager.createQuery(queryString)
-                .setParameter("fname", name)
-                .setParameter("lname", name);
+                .setParameter("fname", name.toUpperCase())
+                .setParameter("lname", name.toUpperCase());
         return (List<Actor>) q.getResultList();
     }
 
