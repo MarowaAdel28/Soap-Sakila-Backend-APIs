@@ -68,7 +68,7 @@ Content-Type: text/xml
     <soap:Body>
         <jets:ActorFilmsByLanguage>
             <actorId>1</actorId>
-            <language>Italian</language>
+            <language>English</language>
         </jets:ActorFilmsByLanguage>
     </soap:Body>
 </soap:Envelope>
@@ -147,8 +147,8 @@ Content-Type: text/xml
     <soap:Body>
         <jets:AddNewActor>
             <ActorObject>
-                <firstName>Ahmed</firstName>
-                <lastName>Helmy</lastName>
+                <firstName>Waffa</firstName>
+                <lastName>Ammer</lastName>
             </ActorObject>
         </jets:AddNewActor>
     </soap:Body>
@@ -164,8 +164,8 @@ Content-Type: text/xml
         xmlns:jets="http://services.soap.api.jets.iti.gov/">
     <soap:Body>
         <jets:EditActor>
+            <ActorId>207</ActorId>
             <ActorObject>
-                <actorId>202</actorId>
                 <firstName>Ahmed</firstName>
                 <lastName>Zaki</lastName>
                 <lastUpdate/>

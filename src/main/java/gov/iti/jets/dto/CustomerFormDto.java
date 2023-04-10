@@ -9,20 +9,26 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * A DTO for the {@link gov.iti.jets.entity.Staff} entity
+ * A DTO for the {@link gov.iti.jets.entity.Customer} entity
  */
+@XmlRootElement
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@XmlRootElement
-public class StaffDto implements Serializable {
-    private Short staffId;
+
+public class CustomerFormDto implements Serializable {
     private String firstName;
     private String lastName;
-//    private byte[] picture;
     private String email;
     private boolean active;
-    private String username;
-//    private String password;
+    private Date createDate;
     private Date lastUpdate;
+    private String address;
+    private String district;
+    private Short city;
+    private Short country;
+    private String postalCode;
+    private String phone;
+    private Short store;
+
 }

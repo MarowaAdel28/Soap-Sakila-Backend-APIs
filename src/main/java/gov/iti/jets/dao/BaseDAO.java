@@ -23,14 +23,14 @@ public abstract class BaseDAO <E extends Object>{
 
     }
 
-    public BaseDAO (Class<E> entity)
-    {
-//        this.entityManagerFactory = Persistence.createEntityManagerFactory("Sakila");
-        this.entityManagerFactory = DBFactory.getDbFactoryInstance().getEntityManagerFactory();
-        this.entityManager =  entityManagerFactory.createEntityManager();
-        this.entity  = entity;
-        this.criteriaBuilder = entityManager.getCriteriaBuilder();
-    }
+//    public BaseDAO (Class<E> entity)
+//    {
+////        this.entityManagerFactory = Persistence.createEntityManagerFactory("Sakila");
+//        this.entityManagerFactory = DBFactory.getDbFactoryInstance().getEntityManagerFactory();
+//        this.entityManager =  entityManagerFactory.createEntityManager();
+//        this.entity  = entity;
+//        this.criteriaBuilder = entityManager.getCriteriaBuilder();
+//    }
 
     public E get(Short id)
     {
@@ -81,6 +81,10 @@ public abstract class BaseDAO <E extends Object>{
 
     public void setManager(EntityManager manager)
     {
-        entityManager = manager;
+        this.entityManager = manager;
     }
+
+//    public void closeEntityManager() {
+//        this.entityManager.close();
+//    }
 }

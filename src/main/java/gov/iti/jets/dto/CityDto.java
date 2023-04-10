@@ -21,4 +21,6 @@ public class CityDto implements Serializable {
     private Short cityId;
     private String city;
     private Date lastUpdate;
+    private short countryID;
+    private String countryName;
 }

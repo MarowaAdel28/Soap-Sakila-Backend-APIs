@@ -6,28 +6,36 @@ import jakarta.persistence.Persistence;
 
 public class DBFactory {
 
-    private static DBFactory dbFactoryInstance = new DBFactory();
+    private volatile static DBFactory dbFactoryInstance;
     private EntityManagerFactory entityManagerFactory;
 
     public static DBFactory getDbFactoryInstance() {
+
+        if(dbFactoryInstance==null) {
+            synchronized (DBFactory.class) {
+                if(dbFactoryInstance==null) {
+                    dbFactoryInstance = new DBFactory();
+                }
+            }
+        }
         return dbFactoryInstance;
     }
 
     private DBFactory() {
-        entityManagerFactory = Persistence.createEntityManagerFactory("Sakila");
+
+        this.entityManagerFactory = Persistence.createEntityManagerFactory("Sakila");
     }
 
     public EntityManagerFactory getEntityManagerFactory() {
         return entityManagerFactory;
     }
 
-    // private final static EntityManagerFactory entityManagerFactory =Persistence.createEntityManagerFactory("Sakila");
+    public EntityManager createEntityManager() {
+        return entityManagerFactory.createEntityManager();
+    }
 
-    // private DBFactory() {
+    public void closeEntityManager(EntityManager entityManager) {
+        entityManager.close();
+    }
 
-    // }
-
-    // public static EntityManagerFactory getInstance() {
-    //     return entityManagerFactory;
-    // }
 }

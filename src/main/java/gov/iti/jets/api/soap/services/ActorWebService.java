@@ -1,8 +1,7 @@
 package gov.iti.jets.api.soap.services;
 
 import gov.iti.jets.dto.ActorDto;
-import gov.iti.jets.dto.AddingActorDto;
-import gov.iti.jets.dto.FilmActorDto;
+import gov.iti.jets.dto.ActorFormDto;
 import gov.iti.jets.dto.FilmDto;
 import gov.iti.jets.service.ActorService;
 import jakarta.jws.WebMethod;
@@ -56,12 +55,12 @@ public class ActorWebService {
     }
 
     @WebMethod(operationName = "AddNewActor")
-    public boolean addActor(@WebParam(name = "ActorObject") AddingActorDto actorDto) {
+    public boolean addActor(@WebParam(name = "ActorObject") ActorFormDto actorDto) {
         return actorService.addActor(actorDto);
     }
 
     @WebMethod(operationName = "EditActor")
-    public boolean editActor(@WebParam(name = "ActorObject") ActorDto actorDto) {
-        return actorService.editActor(actorDto);
+    public boolean editActor(@WebParam(name = "ActorId")short id, @WebParam(name = "ActorObject") ActorFormDto actorDto) {
+        return actorService.editActor(id,actorDto);
     }
 }
