@@ -2,6 +2,7 @@ package gov.iti.jets.service;
 
 import gov.iti.jets.dao.ActorDAO;
 import gov.iti.jets.dao.CategoryDAO;
+import gov.iti.jets.dao.DBFactory;
 import gov.iti.jets.dto.CategoryDto;
 import gov.iti.jets.dto.FilmDto;
 import gov.iti.jets.entity.*;
@@ -9,6 +10,7 @@ import gov.iti.jets.mapper.ActorMapper;
 import gov.iti.jets.mapper.CategoryMapper;
 import gov.iti.jets.mapper.FilmActorMapper;
 import gov.iti.jets.mapper.FilmMapper;
+import jakarta.persistence.EntityManager;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -43,32 +45,53 @@ public class CategoryService {
     }
 
     public CategoryDto getCategoryById(short id) {
-        CategoryDAO categoryDAO = new CategoryDAO();
+        DBFactory dbFactory = DBFactory.getDbFactoryInstance();
+        EntityManager entityManager = dbFactory.createEntityManager();
+        CategoryDAO categoryDAO = new CategoryDAO(entityManager);
         Category category = categoryDAO.get(id);
-        return categoryMapper.toDto(category);
+        CategoryDto categoryDto = categoryMapper.toDto(category);
+        dbFactory.closeEntityManager(entityManager);
+        return categoryDto;
     }
 
     public List<CategoryDto> getAllCategories() {
-        CategoryDAO categoryDAO = new CategoryDAO();
+        DBFactory dbFactory = DBFactory.getDbFactoryInstance();
+        EntityManager entityManager = dbFactory.createEntityManager();
+        CategoryDAO categoryDAO = new CategoryDAO(entityManager);
         List<Category> categories = categoryDAO.getAllCategories();
-        return categoryMapper.toDTOs(categories);
+        List<CategoryDto> categoryDtoList = categoryMapper.toDTOs(categories);
+        dbFactory.closeEntityManager(entityManager);
+        return categoryDtoList;
     }
 
     public List<CategoryDto> searchCategoryByName(String name) {
-        CategoryDAO categoryDAO = new CategoryDAO();
+        DBFactory dbFactory = DBFactory.getDbFactoryInstance();
+        EntityManager entityManager = dbFactory.createEntityManager();
+        CategoryDAO categoryDAO = new CategoryDAO(entityManager);
         List<Category> categories = categoryDAO.searchByCategoryName(name);
-        return categoryMapper.toDTOs(categories);
+        List<CategoryDto> categoryDtoList = categoryMapper.toDTOs(categories);
+        dbFactory.closeEntityManager(entityManager);
+        return categoryDtoList;
     }
 
     public List<FilmDto> getCategoryFilms(short categoryId) {
-        CategoryDAO categoryDAO = new CategoryDAO();
+        DBFactory dbFactory = DBFactory.getDbFactoryInstance();
+        EntityManager entityManager = dbFactory.createEntityManager();
+        CategoryDAO categoryDAO = new CategoryDAO(entityManager);
         Category category = categoryDAO.get(categoryId);
         List<FilmCategory> filmCategoryList = category.getFilmCategoryList();
         List<FilmDto> filmDtoList = filmCategoryList.stream().map(FilmCategory::getFilm).map((film -> filmMapper.toDto(film))).toList();
+        dbFactory.closeEntityManager(entityManager);
         return filmDtoList;
     }
     public int getCategoryFilmsCount(short categoryId) {
-        return getCategoryFilms(categoryId).size();
+        DBFactory dbFactory = DBFactory.getDbFactoryInstance();
+        EntityManager entityManager = dbFactory.createEntityManager();
+        CategoryDAO categoryDAO = new CategoryDAO(entityManager);
+        Category category = categoryDAO.get(categoryId);
+        int count = category.getFilmCategoryList().size();
+        dbFactory.closeEntityManager(entityManager);
+        return count;
     }
 
 
@@ -82,6 +105,7 @@ public class CategoryService {
 //        return filmDtoList;
 //    }
 
+    // note connection closed list lazy
     private Category getCategory(Film film, short categoryId) {
         List<FilmCategory> filmCategoryList = film.getFilmCategoryList();
         Optional<Category> optionalCategory = filmCategoryList

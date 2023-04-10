@@ -1,0 +1,27 @@
+POST http://localhost:8070/apis/soap/city HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:AllCities>
+            <!--            <arg0>1</arg0>-->
+        </jets:AllCities>
+    </soap:Body>
+</soap:Envelope>
+
+###
+
+POST http://localhost:8070/apis/soap/city HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:CityById>
+            <cityId>1</cityId>
+        </jets:CityById>
+    </soap:Body>
+</soap:Envelope>

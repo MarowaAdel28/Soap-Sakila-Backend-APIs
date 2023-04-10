@@ -18,4 +18,6 @@ import java.util.Date;
 public class InventoryDto implements Serializable {
     private Integer inventoryId;
     private Date lastUpdate;
+    private short filmID;
+    private String filmName;
 }

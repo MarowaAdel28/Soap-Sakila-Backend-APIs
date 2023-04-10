@@ -20,6 +20,21 @@
             implementation="gov.iti.jets.api.soap.services.CustomerWebService"
             url-pattern="/soap/customer" />
 
+    <endpoint
+            name="CityWebService"
+            implementation="gov.iti.jets.api.soap.services.CityWebService"
+            url-pattern="/soap/city" />
+
+    <endpoint
+            name="CountryWebService"
+            implementation="gov.iti.jets.api.soap.services.CountryWebService"
+            url-pattern="/soap/country" />
+
+    <endpoint
+            name="StoreWebService"
+            implementation="gov.iti.jets.api.soap.services.StoreWebService"
+            url-pattern="/soap/store" />
+
 <!--    <endpoint-->
 <!--            name="PaymentWebService"-->
 <!--            implementation="gov.iti.services.PaymentWebService"-->

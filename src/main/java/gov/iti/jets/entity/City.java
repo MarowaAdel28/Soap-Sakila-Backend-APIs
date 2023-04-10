@@ -50,15 +50,19 @@ public class City extends BaseEntity implements Serializable {
     @Basic(optional = false)
     @Column(name = "city_id")
     private Short cityId;
+
     @Basic(optional = false)
     @Column(name = "city")
     private String city;
+
     @Basic(optional = false)
     @Column(name = "last_update")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdate;
+
     @OneToMany(mappedBy = "cityId", fetch = FetchType.LAZY)
     private List<Address> addressList = new ArrayList<>();
+
     @JoinColumn(name = "country_id", referencedColumnName = "country_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Country countryId;

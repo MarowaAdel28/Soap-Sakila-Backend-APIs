@@ -2,14 +2,15 @@ package gov.iti.jets.dao;
 
 import gov.iti.jets.entity.Actor;
 import gov.iti.jets.entity.Category;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 
 import java.util.List;
 
 public class CategoryDAO extends BaseDAO<Category>{
 
-    public CategoryDAO() {
-        super(Category.class);
+    public CategoryDAO(EntityManager entityManager) {
+        super(Category.class,entityManager);
     }
 
     public List<Category> getAllCategories() {

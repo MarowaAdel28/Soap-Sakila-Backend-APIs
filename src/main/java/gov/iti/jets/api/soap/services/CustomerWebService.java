@@ -1,13 +1,6 @@
 package gov.iti.jets.api.soap.services;
 
-import gov.iti.jets.dao.CustomerDAO;
-import gov.iti.jets.dto.CustomerDto;
-import gov.iti.jets.dto.CustomerInfoDto;
-import gov.iti.jets.dto.PaymentDto;
-import gov.iti.jets.dto.RentalDto;
-import gov.iti.jets.entity.Customer;
-import gov.iti.jets.entity.Payment;
-import gov.iti.jets.entity.Rental;
+import gov.iti.jets.dto.*;
 import gov.iti.jets.service.CustomerService;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
@@ -28,24 +21,24 @@ public class CustomerWebService {
     }
 
     @WebMethod(operationName = "AllCustomerList")
-    public List<CustomerDto> getAllCustomers() {
+    public List<CustomerInfoDto> getAllCustomers() {
         return customerService.getAllCustomers();
     }
 
     @WebMethod(operationName = "AllActiveCustomerList")
-    public List<CustomerDto> getAllActiveCustomers() {
+    public List<CustomerInfoDto> getAllActiveCustomers() {
         return customerService.getAllActiveCustomers();
     }
 
     @WebMethod(operationName = "AllInActiveCustomerList")
-    public List<CustomerDto> getAllInactiveCustomers() {
+    public List<CustomerInfoDto> getAllInactiveCustomers() {
         return customerService.getAllInactiveCustomers();
     }
 
-    @WebMethod(operationName = "AllStoreCustomerList")
-    public List<CustomerDto> getAllStoreCustomers(@WebParam(name = "storeId") Short storeId) {
-        return customerService.getAllStoreCustomers(storeId);
-    }
+//    @WebMethod(operationName = "AllStoreCustomerList")
+//    public List<CustomerDto> getAllStoreCustomers(@WebParam(name = "storeId") Short storeId) {
+//        return customerService.getAllStoreCustomers(storeId);
+//    }
 
     @WebMethod(operationName = "AllCustomerCount")
     public int getAllCustomersCount() {
@@ -62,10 +55,10 @@ public class CustomerWebService {
         return customerService.getAllInactiveCustomersCount();
     }
 
-    @WebMethod(operationName = "AllStoreCustomerCount")
-    public int getAllStoreCustomersCount(@WebParam(name = "storeId") short storeId) {
-        return customerService.getAllStoreCustomersCount(storeId);
-    }
+//    @WebMethod(operationName = "AllStoreCustomerCount")
+//    public int getAllStoreCustomersCount(@WebParam(name = "storeId") short storeId) {
+//        return customerService.getAllStoreCustomersCount(storeId);
+//    }
     @WebMethod(operationName = "CustomerPaymentList")
     public List<PaymentDto> getCustomerPayment(@WebParam(name = "customerId") short customerId) {
         return customerService.getCustomerPayment(customerId);
@@ -89,5 +82,17 @@ public class CustomerWebService {
     @WebMethod(operationName = "SearchCustomerByName")
     public List<CustomerInfoDto> searchByName(@WebParam(name = "customerName") String name) {
         return customerService.searchByName(name);
+    }
+
+    @WebMethod(operationName = "AddCustomer")
+    public boolean addCustomer(@WebParam(name = "customer") CustomerFormDto customerDto) {
+//        System.out.println("enter add customer web service");
+        return customerService.addCustomer(customerDto);
+    }
+
+    @WebMethod(operationName = "EditCustomer")
+    public boolean editCustomer(@WebParam(name = "customerId")Short id, @WebParam(name = "customer") CustomerFormDto customerDto) {
+//        System.out.println("enter add customer web service");
+        return customerService.editCustomer(id,customerDto);
     }
 }

@@ -20,7 +20,7 @@ Content-Type: text/xml
         xmlns:jets="http://services.soap.api.jets.iti.gov/">
     <soap:Body>
         <jets:CustomerById>
-            <customerId>1</customerId>
+            <customerId>601</customerId>
         </jets:CustomerById>
     </soap:Body>
 </soap:Envelope>
@@ -48,21 +48,6 @@ Content-Type: text/xml
         xmlns:jets="http://services.soap.api.jets.iti.gov/">
     <soap:Body>
         <jets:AllInActiveCustomerList/>
-    </soap:Body>
-</soap:Envelope>
-
-###
-
-POST http://localhost:8070/apis/soap/customer HTTP/1.1
-Content-Type: text/xml
-
-<soap:Envelope
-        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
-        xmlns:jets="http://services.soap.api.jets.iti.gov/">
-    <soap:Body>
-        <jets:AllStoreCustomerList>
-            <storeId>1</storeId>
-        </jets:AllStoreCustomerList>
     </soap:Body>
 </soap:Envelope>
 
@@ -107,20 +92,6 @@ Content-Type: text/xml
 
 ###
 
-POST http://localhost:8070/apis/soap/customer HTTP/1.1
-Content-Type: text/xml
-
-<soap:Envelope
-        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
-        xmlns:jets="http://services.soap.api.jets.iti.gov/">
-    <soap:Body>
-        <jets:AllStoreCustomerCount>
-            <storeId>1</storeId>
-        </jets:AllStoreCustomerCount>
-    </soap:Body>
-</soap:Envelope>
-
-###
 POST http://localhost:8070/apis/soap/customer HTTP/1.1
 Content-Type: text/xml
 
@@ -191,5 +162,60 @@ Content-Type: text/xml
         <jets:SearchCustomerByName>
             <customerName>DOLORES</customerName>
         </jets:SearchCustomerByName>
+    </soap:Body>
+</soap:Envelope>
+
+###
+
+POST http://localhost:8070/apis/soap/customer HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:AddCustomer>
+            <customer>
+                <firstName>Mohga</firstName>
+                <lastName>Ahmed</lastName>
+                <email>mogy@gmail.com</email>
+                <active>true</active>
+                <address>Cairo</address>
+                <district>Misr El-Gedida</district>
+                <city>3</city>
+                <country>101</country>
+                <postalCode>45454</postalCode>
+                <phone>010214541</phone>
+                <store>2</store>
+            </customer>
+        </jets:AddCustomer>
+    </soap:Body>
+</soap:Envelope>
+
+###
+
+POST http://localhost:8070/apis/soap/customer HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:EditCustomer>
+            <customerId>601</customerId>
+            <customer>
+                <firstName>Mohamed</firstName>
+                <lastName>Mustafa</lastName>
+                <email>mohamed111@gmail.com</email>
+                <active>true</active>
+                <address>LabLab</address>
+                <district>El-Salam</district>
+                <city>3</city>
+                <country>101</country>
+                <postalCode>45454</postalCode>
+                <phone>010214541</phone>
+                <store>1</store>
+            </customer>
+        </jets:EditCustomer>
     </soap:Body>
 </soap:Envelope>

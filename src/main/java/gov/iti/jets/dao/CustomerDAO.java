@@ -2,14 +2,15 @@ package gov.iti.jets.dao;
 
 import gov.iti.jets.entity.Actor;
 import gov.iti.jets.entity.Customer;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 
 import java.util.List;
 
 public class CustomerDAO extends BaseDAO<Customer> {
 
-    public CustomerDAO() {
-        super(Customer.class);
+    public CustomerDAO(EntityManager entityManager) {
+        super(Customer.class,entityManager);
     }
 
     public List<Customer> getAllCustomers() {
