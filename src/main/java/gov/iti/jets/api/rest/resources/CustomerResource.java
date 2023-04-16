@@ -31,7 +31,7 @@ public class CustomerResource {
 
     @GET
     @Path("filter")
-    public List<CustomerInfoDto> filterCustomer(@QueryParam("isActivr") boolean isActive) {
+    public List<CustomerInfoDto> filterCustomer(@QueryParam("isActive") boolean isActive) {
 
         if(isActive) {
             return customerService.getAllActiveCustomers();

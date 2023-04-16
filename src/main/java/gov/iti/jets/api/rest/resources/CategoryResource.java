@@ -1,11 +1,10 @@
 package gov.iti.jets.api.rest.resources;
 
 import gov.iti.jets.dto.CategoryDto;
+import gov.iti.jets.dto.CategoryFormDto;
 import gov.iti.jets.service.CategoryService;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 
 import java.util.List;
 
@@ -33,6 +32,19 @@ public class CategoryResource {
     @Path("search")
     public List<CategoryDto> searchByName(@QueryParam("name") String name) {
         return categoryService.searchCategoryByName(name);
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public boolean addCategory(CategoryFormDto categoryDto) {
+        return categoryService.addCategory(categoryDto.getCategoryName());
+    }
+
+    @PUT
+    @Path("{id: [0-9]+}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public boolean editCategory(@PathParam("id") Short categoryId, CategoryFormDto categoryDto) {
+        return categoryService.editCategory(categoryId,categoryDto.getCategoryName());
     }
 
 }

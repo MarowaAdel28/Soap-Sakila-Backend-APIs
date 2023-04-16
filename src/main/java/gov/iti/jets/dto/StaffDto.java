@@ -25,4 +25,6 @@ public class StaffDto implements Serializable {
     private String username;
 //    private String password;
     private Date lastUpdate;
+    private String address;
+    private Short storeID;
 }

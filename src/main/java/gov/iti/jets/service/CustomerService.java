@@ -1,5 +1,7 @@
 package gov.iti.jets.service;
 
+import gov.iti.jets.custommapper.CustomPaymentMapper;
+import gov.iti.jets.custommapper.CustomRentalMapper;
 import gov.iti.jets.dao.*;
 import gov.iti.jets.dto.*;
 import gov.iti.jets.entity.*;
@@ -15,20 +17,26 @@ import java.util.List;
 public class CustomerService {
 
     private volatile static CustomerService customerService;
-    private CustomerMapper customerMapper;
+//    private CustomerMapper customerMapper;
 
-    private PaymentMapper paymentMapper;
+//    private PaymentMapper paymentMapper;
 
-    private RentalMapper rentalMapper;
+    private CustomPaymentMapper customPaymentMapper;
+
+    private CustomRentalMapper customRentalMapper;
+
+//    private RentalMapper rentalMapper;
 
     private CustomerInfoMapper customerInfoMapper;
 
     private CustomerFormMapper customerFormMapper;
 
     private CustomerService() {
-        customerMapper = Mappers.getMapper(CustomerMapper.class);
-        paymentMapper = Mappers.getMapper(PaymentMapper.class);
-        rentalMapper = Mappers.getMapper(RentalMapper.class);
+//        customerMapper = Mappers.getMapper(CustomerMapper.class);
+//        paymentMapper = Mappers.getMapper(PaymentMapper.class);
+        customPaymentMapper = CustomPaymentMapper.getInstance();
+        customRentalMapper = CustomRentalMapper.getInstance();
+//        rentalMapper = Mappers.getMapper(RentalMapper.class);
         customerInfoMapper = Mappers.getMapper(CustomerInfoMapper.class);
         customerFormMapper = Mappers.getMapper(CustomerFormMapper.class);
     }
@@ -124,7 +132,10 @@ public class CustomerService {
         EntityManager entityManager = dbFactory.createEntityManager();
         CustomerDAO customerDAO = new CustomerDAO(entityManager);
         List<Payment> paymentList = customerDAO.get(customerId).getPaymentList();
-        List<PaymentDto> paymentDtoList = paymentMapper.toDTOs(paymentList);
+        List<PaymentDto> paymentDtoList = new ArrayList<>();
+        paymentList.forEach(payment -> {
+            paymentDtoList.add(customPaymentMapper.toPaymentDto(payment));
+        });
         dbFactory.closeEntityManager(entityManager);
         return paymentDtoList;
     }
@@ -147,7 +158,11 @@ public class CustomerService {
         EntityManager entityManager = dbFactory.createEntityManager();
         CustomerDAO customerDAO = new CustomerDAO(entityManager);
         List<Rental> rentalList = customerDAO.get(customerId).getRentalList();
-        List<RentalDto> rentalDtoList = rentalMapper.toDTOs(rentalList);
+        List<RentalDto> rentalDtoList = new ArrayList<>();
+
+        for (Rental rental : rentalList) {
+            rentalDtoList.add(customRentalMapper.toRentalDto(rental));
+        }
 
         dbFactory.closeEntityManager(entityManager);
 

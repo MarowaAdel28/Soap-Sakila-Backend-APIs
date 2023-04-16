@@ -2,7 +2,6 @@ package gov.iti.jets.api.rest.resources;
 
 import gov.iti.jets.dto.CityDto;
 import gov.iti.jets.dto.CountryDto;
-import gov.iti.jets.service.CityService;
 import gov.iti.jets.service.CountryService;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -11,7 +10,7 @@ import jakarta.ws.rs.QueryParam;
 
 import java.util.List;
 
-@Path("cities")
+@Path("countries")
 public class CountryResource {
 
     private CountryService countryService;

@@ -1,5 +1,6 @@
 package gov.iti.jets.dto;
 
+import gov.iti.jets.entity.Inventory;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,4 +21,9 @@ public class RentalDto implements Serializable {
     private Date rentalDate;
     private Date returnDate;
     private Date lastUpdate;
+    private Short customerID;
+    private String customerName;
+    private Short staffID;
+    private String staffName;
+    private Integer InventoryID;
 }

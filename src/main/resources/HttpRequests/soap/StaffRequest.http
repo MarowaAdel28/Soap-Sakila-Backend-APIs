@@ -1,0 +1,73 @@
+POST http://localhost:8070/apis/soap/staff HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:AllStaffs/>
+    </soap:Body>
+</soap:Envelope>
+
+###
+
+POST http://localhost:8070/apis/soap/staff HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:addStaff>
+            <staff>
+                <firstName>marwa</firstName>
+                <lastName>adel</lastName>
+                <picture></picture>
+                <email>marwa@gmail.com</email>
+                <active>true</active>
+                <username>marwa_adel</username>
+                <password>123456</password>
+                <address>LabLab</address>
+                <district>El-Salam</district>
+                <city>3</city>
+                <country>101</country>
+                <postalCode>45454</postalCode>
+                <phone>010214541</phone>
+                <storeID>1</storeID>
+            </staff>
+        </jets:addStaff>
+    </soap:Body>
+</soap:Envelope>
+
+###
+
+POST http://localhost:8070/apis/soap/staff HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:editStaff>
+            <staffId>3</staffId>
+            <staff>
+                <firstName>Marwa</firstName>
+                <lastName>Adel</lastName>
+                <picture></picture>
+                <email>marwa@gmail.com</email>
+                <active>true</active>
+                <username>marwa_adel</username>
+                <password>123456</password>
+                <address>LabLab</address>
+                <district>El-Salam</district>
+                <city>3</city>
+                <country>101</country>
+                <postalCode>45454</postalCode>
+                <phone>010214541</phone>
+                <storeID>1</storeID>
+            </staff>
+        </jets:editStaff>
+    </soap:Body>
+</soap:Envelope>
+
+###

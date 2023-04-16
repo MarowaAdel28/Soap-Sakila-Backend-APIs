@@ -5,7 +5,7 @@ import gov.iti.jets.dto.ActorFormDto;
 import gov.iti.jets.service.ActorService;
 import jakarta.ws.rs.*;
 
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MediaType;
 import java.util.List;
 
 @Path("actors")

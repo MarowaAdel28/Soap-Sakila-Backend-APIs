@@ -1,0 +1,31 @@
+GET http://localhost:8070/apis/rest/customers HTTP/1.1
+
+###
+
+GET http://localhost:8070/apis/rest/customers/1 HTTP/1.1
+
+###
+
+GET http://localhost:8070/apis/rest/customers/filter?isActivr=true HTTP/1.1
+
+###
+
+GET http://localhost:8070/apis/rest/customers/filter?isActivr=false HTTP/1.1
+
+###
+
+GET http://localhost:8070/apis/rest/customers/1/payment HTTP/1.1
+
+###
+
+GET http://localhost:8070/apis/rest/customers/1/rental HTTP/1.1
+
+###
+
+GET http://localhost:8070/apis/rest/customers/search?name=maha HTTP/1.1
+
+###
+#POST
+
+###
+#PUT

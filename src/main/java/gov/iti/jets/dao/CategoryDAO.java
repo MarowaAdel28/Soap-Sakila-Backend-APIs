@@ -1,6 +1,5 @@
 package gov.iti.jets.dao;
 
-import gov.iti.jets.entity.Actor;
 import gov.iti.jets.entity.Category;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;

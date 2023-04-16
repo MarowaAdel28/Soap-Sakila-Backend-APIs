@@ -1,9 +1,7 @@
 package gov.iti.jets.api.rest.resources;
 
-import gov.iti.jets.dto.CustomerInfoDto;
-import gov.iti.jets.dto.InventoryDto;
-import gov.iti.jets.dto.StaffDto;
-import gov.iti.jets.dto.StoreDto;
+import gov.iti.jets.dto.*;
+import gov.iti.jets.service.InventoryService;
 import gov.iti.jets.service.StoreService;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -15,8 +13,11 @@ import java.util.List;
 public class StoreResource {
 
     private StoreService storeService;
+
+    private InventoryService inventoryService;
     public StoreResource() {
         storeService = StoreService.getInstance();
+        inventoryService = InventoryService.getInstance();
     }
 
     @GET
@@ -46,5 +47,11 @@ public class StoreResource {
     @Path("{id:[0-9]+}/inventries")
     public List<InventoryDto> getStoreInventoryList(@PathParam("id") Short storeId) {
         return storeService.getStoreInventoryList(storeId);
+    }
+
+    @GET
+    @Path("{id:[0-9]+}/films")
+    public List<FilmDto> getStoreFilms(@PathParam("id") Short storeId) {
+        return inventoryService.getStoreFilms(storeId);
     }
 }

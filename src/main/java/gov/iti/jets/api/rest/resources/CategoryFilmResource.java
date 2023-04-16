@@ -1,7 +1,6 @@
 package gov.iti.jets.api.rest.resources;
 
 import gov.iti.jets.dto.FilmDto;
-import gov.iti.jets.entity.Film;
 import gov.iti.jets.service.CategoryService;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;

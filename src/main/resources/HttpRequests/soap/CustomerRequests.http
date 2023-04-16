@@ -176,12 +176,12 @@ Content-Type: text/xml
     <soap:Body>
         <jets:AddCustomer>
             <customer>
-                <firstName>Mohga</firstName>
-                <lastName>Ahmed</lastName>
-                <email>mogy@gmail.com</email>
+                <firstName>sara</firstName>
+                <lastName>Adel</lastName>
+                <email>sara@gmail.com</email>
                 <active>true</active>
                 <address>Cairo</address>
-                <district>Misr El-Gedida</district>
+                <district>El-Mokatom</district>
                 <city>3</city>
                 <country>101</country>
                 <postalCode>45454</postalCode>
@@ -206,7 +206,7 @@ Content-Type: text/xml
             <customer>
                 <firstName>Mohamed</firstName>
                 <lastName>Mustafa</lastName>
-                <email>mohamed111@gmail.com</email>
+                <email>mohamed222@gmail.com</email>
                 <active>true</active>
                 <address>LabLab</address>
                 <district>El-Salam</district>

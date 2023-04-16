@@ -42,12 +42,13 @@ public abstract class BaseDAO <E extends Object>{
         try{
             entityManager.getTransaction().begin();
             entityManager.merge(entity);
+            entityManager.getTransaction().commit();
+
         } catch (Exception e) {
+            entityManager.getTransaction().rollback();
             return false;
         }
-        finally{
-            entityManager.getTransaction().commit();
-        }
+
         return true;
     }
     public boolean save(E entity)
@@ -56,11 +57,16 @@ public abstract class BaseDAO <E extends Object>{
         try{
             entityManager.getTransaction().begin();
             entityManager.persist(entity);
+
         } catch (Exception e) {
+            System.out.println("catching exception "+entity.getClass().getName());
             result =  false;
-        }
-        finally{
-            entityManager.getTransaction().commit();
+            entityManager.getTransaction().rollback();
+        } finally {
+            if(result) {
+                System.out.println("result is true "+entity.getClass().getName());
+                entityManager.getTransaction().commit();
+            }
         }
         return result;
     }

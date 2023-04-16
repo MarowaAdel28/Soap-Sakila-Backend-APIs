@@ -1,0 +1,119 @@
+POST http://localhost:8070/apis/soap/store HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:AllStores>
+            <!--            <arg0>1</arg0>-->
+        </jets:AllStores>
+    </soap:Body>
+</soap:Envelope>
+
+###
+
+POST http://localhost:8070/apis/soap/store HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:StoreById>
+            <StoreId>1</StoreId>
+        </jets:StoreById>
+    </soap:Body>
+</soap:Envelope>
+
+###
+
+POST http://localhost:8070/apis/soap/store HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:StoreCustomerList>
+            <StoreId>1</StoreId>
+        </jets:StoreCustomerList>
+    </soap:Body>
+</soap:Envelope>
+
+###
+
+POST http://localhost:8070/apis/soap/store HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:StoreStaffList>
+            <StoreId>2</StoreId>
+        </jets:StoreStaffList>
+    </soap:Body>
+</soap:Envelope>
+
+###
+
+POST http://localhost:8070/apis/soap/store HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:StoreInventoryList>
+            <StoreId>2</StoreId>
+        </jets:StoreInventoryList>
+    </soap:Body>
+</soap:Envelope>
+
+###
+
+POST http://localhost:8070/apis/soap/store HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:addStore>
+            <store>
+                <address>LabLab</address>
+                <district>El-Salam</district>
+                <city>3</city>
+                <country>101</country>
+                <postalCode>45454</postalCode>
+                <phone>010214541</phone>
+                <storeManager>3</storeManager>
+            </store>
+        </jets:addStore>
+    </soap:Body>
+</soap:Envelope>
+
+###
+
+POST http://localhost:8070/apis/soap/store HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:editStore>
+            <storeId>4</storeId>
+            <store>
+                <address>LabLab2</address>
+                <district>El-Salam</district>
+                <city>3</city>
+                <country>101</country>
+                <postalCode>45454</postalCode>
+                <phone>010214541</phone>
+                <storeManager>4</storeManager>
+            </store>
+        </jets:editStore>
+    </soap:Body>
+</soap:Envelope>

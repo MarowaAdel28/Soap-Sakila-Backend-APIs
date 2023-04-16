@@ -2,6 +2,7 @@ package gov.iti.jets.mapper;
 
 import gov.iti.jets.dto.ActorDto;
 import gov.iti.jets.entity.Actor;
+import jakarta.annotation.Generated;
 import org.mapstruct.*;
 
 import java.util.ArrayList;
@@ -10,6 +11,9 @@ import java.util.Collection;
 import static java.util.stream.Collectors.toCollection;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.CDI)
+//@Generated("jakarta.annotation.Generated")
+@Generated(value = "jakarta.annotation.Generated")
+
 public interface ActorMapper {
     Actor toEntity(ActorDto actorDto);
 

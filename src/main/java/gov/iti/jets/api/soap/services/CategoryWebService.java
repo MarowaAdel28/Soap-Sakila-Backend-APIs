@@ -40,4 +40,12 @@ public class CategoryWebService {
     public int getCategoryFilmsCount(@WebParam(name = "categoryId") short categoryId) {
         return categoryService.getCategoryFilmsCount(categoryId);
     }
+
+    public boolean addCategory(@WebParam(name = "categoryName") String categoryName) {
+        return categoryService.addCategory(categoryName);
+    }
+
+    public boolean editCategory(@WebParam(name = "categoryId") Short categoryId, @WebParam(name = "categoryName") String categoryName) {
+        return categoryService.editCategory(categoryId,categoryName);
+    }
 }

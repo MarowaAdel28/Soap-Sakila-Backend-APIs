@@ -1,6 +1,5 @@
 package gov.iti.jets.service;
 
-import gov.iti.jets.dao.ActorDAO;
 import gov.iti.jets.dao.CategoryDAO;
 import gov.iti.jets.dao.DBFactory;
 import gov.iti.jets.dto.CategoryDto;
@@ -13,6 +12,7 @@ import gov.iti.jets.mapper.FilmMapper;
 import jakarta.persistence.EntityManager;
 import org.mapstruct.factory.Mappers;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,6 +92,36 @@ public class CategoryService {
         int count = category.getFilmCategoryList().size();
         dbFactory.closeEntityManager(entityManager);
         return count;
+    }
+
+    public boolean addCategory(String categoryName) {
+        DBFactory dbFactory = DBFactory.getDbFactoryInstance();
+        EntityManager entityManager = dbFactory.createEntityManager();
+        CategoryDAO categoryDAO = new CategoryDAO(entityManager);
+
+        Category category = new Category();
+        category.setName(categoryName);
+        category.setLastUpdate(new Date());
+
+        boolean result = categoryDAO.save(category);
+
+        dbFactory.closeEntityManager(entityManager);
+        return result;
+    }
+
+    public boolean editCategory(Short categoryId, String categoryName) {
+        DBFactory dbFactory = DBFactory.getDbFactoryInstance();
+        EntityManager entityManager = dbFactory.createEntityManager();
+        CategoryDAO categoryDAO = new CategoryDAO(entityManager);
+
+        Category category = categoryDAO.get(categoryId);
+        category.setName(categoryName);
+        category.setLastUpdate(new Date());
+
+        boolean result = categoryDAO.update(category);
+
+        dbFactory.closeEntityManager(entityManager);
+        return result;
     }
 
 

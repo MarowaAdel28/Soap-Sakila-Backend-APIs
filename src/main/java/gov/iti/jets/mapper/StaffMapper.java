@@ -2,8 +2,10 @@ package gov.iti.jets.mapper;
 
 import gov.iti.jets.dto.ActorDto;
 import gov.iti.jets.dto.StaffDto;
+import gov.iti.jets.dto.StaffFormDto;
 import gov.iti.jets.entity.Actor;
 import gov.iti.jets.entity.Staff;
+import jakarta.annotation.Generated;
 import org.mapstruct.*;
 
 import java.util.ArrayList;
@@ -12,6 +14,8 @@ import java.util.Collection;
 import static java.util.stream.Collectors.toCollection;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.CDI)
+//@Generated("jakarta.annotation.Generated")
+@Generated(value = "jakarta.annotation.Generated")
 public interface StaffMapper {
     Staff toEntity(StaffDto staffDto);
 
@@ -27,4 +31,5 @@ public interface StaffMapper {
     default ArrayList<Staff> toEntities(Collection<StaffDto> staffDtoS) {
         return staffDtoS.stream().map(dto -> toEntity(dto)).collect(toCollection(ArrayList<Staff>::new));
     }
+    Staff toEntity(StaffFormDto staffDto);
 }
