@@ -61,6 +61,7 @@ public abstract class BaseDAO <E extends Object>{
         } catch (Exception e) {
             System.out.println("catching exception "+entity.getClass().getName());
             result =  false;
+            e.printStackTrace();
             entityManager.getTransaction().rollback();
         } finally {
             if(result) {
@@ -69,6 +70,28 @@ public abstract class BaseDAO <E extends Object>{
             }
         }
         return result;
+    }
+
+    public boolean saveRow(E entity) {
+//        boolean result = true;
+        try{
+//            entityManager.getTransaction().begin();
+            entityManager.persist(entity);
+
+        } catch (Exception e) {
+            System.out.println("catching exception " + entity.getClass().getName());
+            System.out.println("----------------------------------------");
+            e.printStackTrace();
+            return false;
+        }
+//            entityManager.getTransaction().rollback();
+//        } finally {
+//            if(result) {
+//                System.out.println("result is true "+entity.getClass().getName());
+//                entityManager.getTransaction().commit();
+//            }
+//        }
+        return true;
     }
 
     public void merge(E entity)

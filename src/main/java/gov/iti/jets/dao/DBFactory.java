@@ -38,4 +38,12 @@ public class DBFactory {
         entityManager.close();
     }
 
+    public void commitTransaction(EntityManager entityManager) {
+        entityManager.getTransaction().commit();
+    }
+
+    public void rollBackTransaction(EntityManager entityManager) {
+        entityManager.getTransaction().rollback();
+    }
+
 }

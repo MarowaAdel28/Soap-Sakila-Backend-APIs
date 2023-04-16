@@ -1,6 +1,8 @@
 package gov.iti.jets.api.soap.services;
 
+import gov.iti.jets.dto.PaymentDto;
 import gov.iti.jets.dto.RentalDto;
+import gov.iti.jets.dto.RentalFormDto;
 import gov.iti.jets.service.RentalService;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
@@ -15,6 +17,7 @@ public class RentalWebService {
     public RentalWebService() {
         rentalService = RentalService.getInstance();
     }
+
 //    @WebMethod(operationName = "RentalById")
 //    public RentalDto getById(@WebParam(name = "rentalId") Short id) {
 //        return rentalService.getById(id);
@@ -23,5 +26,18 @@ public class RentalWebService {
     @WebMethod(operationName = "AllRentals")
     public List<RentalDto> getAll() {
         return rentalService.getAll();
+    }
+
+    public boolean addRental(@WebParam(name = "rental") RentalFormDto rentalFormDto) {
+        return rentalService.addRental(rentalFormDto);
+    }
+
+    public boolean editRental(@WebParam(name = "rentalId") Short id, @WebParam(name = "rental") RentalFormDto rentalFormDto) {
+        return rentalService.editRental(id,rentalFormDto);
+    }
+
+    @WebMethod(operationName = "paymentList")
+    public List<PaymentDto> getPaymentList(@WebParam(name = "rentalId") Short id) {
+        return rentalService.getPaymentList(id);
     }
 }

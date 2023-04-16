@@ -37,7 +37,7 @@ Content-Type: text/xml
         xmlns:jets="http://services.soap.api.jets.iti.gov/">
     <soap:Body>
         <jets:searchByName>
-            <actorName>CUBA</actorName>
+            <actorName>ZORRO ARK S3</actorName>
         </jets:searchByName>
     </soap:Body>
 </soap:Envelope>

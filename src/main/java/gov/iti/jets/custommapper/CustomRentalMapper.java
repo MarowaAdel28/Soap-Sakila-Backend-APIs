@@ -38,6 +38,7 @@ public class CustomRentalMapper {
         rentalDto.setStaffID(rental.getStaffId().getStaffId());
         rentalDto.setInventoryID(rental.getInventoryId().getInventoryId());
 
+
         return rentalDto;
     }
 }
