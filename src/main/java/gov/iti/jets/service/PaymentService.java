@@ -53,18 +53,10 @@ public class PaymentService {
 
         List<Payment> paymentList = paymentDAO.getAll();
         paymentList = paymentList.subList(0,100);
-//        System.out.println("---------------------------------");
-//        System.out.println(paymentList);
 
         List<PaymentDto> paymentDtoList = new ArrayList<>();
-//        System.out.println("---------------------------------");
-//        System.out.println(paymentDtoList);
-//        System.out.println("---------------------------------");
 
         paymentList.forEach((payment -> paymentDtoList.add(customPaymentMapper.toPaymentDto(payment))));
-
-//        System.out.println("---------------------------------");
-//        System.out.println(paymentDtoList);
 
         dbFactory.closeEntityManager(entityManager);
         return paymentDtoList;

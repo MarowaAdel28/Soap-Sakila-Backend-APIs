@@ -32,7 +32,7 @@ public class RentalWebService {
         return rentalService.addRental(rentalFormDto);
     }
 
-    public boolean editRental(@WebParam(name = "rentalId") Short id, @WebParam(name = "rental") RentalFormDto rentalFormDto) {
+    public boolean editRental(@WebParam(name = "rentalId") Integer id, @WebParam(name = "rental") RentalFormDto rentalFormDto) {
         return rentalService.editRental(id,rentalFormDto);
     }
 

@@ -169,17 +169,15 @@ public class StoreService {
         Store store = new Store();
         store.setLastUpdate(new Date());
 
-        if(storeFormDto.getStoreManager()!=null) {
+        if(storeFormDto.getStoreManager()!=null && address!=null) {
             StaffDAO staffDAO = new StaffDAO(entityManager);
             Staff staff = staffDAO.get(storeFormDto.getStoreManager());
             store.setManagerStaffId(staff);
-        }
-
-        if(address!=null) {
             store.setAddressId(address);
-             result = storeDAO.save(store);
+            result = storeDAO.save(store);
         }
 
+        dbFactory.commitTransaction(entityManager,result);
         dbFactory.closeEntityManager(entityManager);
 
         return result;
@@ -191,6 +189,8 @@ public class StoreService {
 
         StoreDAO storeDAO = new StoreDAO(entityManager);
 
+        entityManager.getTransaction().begin();
+
         Address address = saveAddress(entityManager,storeFormDto);
 
         boolean result = false;
@@ -198,15 +198,15 @@ public class StoreService {
         Store store = storeDAO.get(storeId);
         store.setLastUpdate(new Date());
 
-        if(storeFormDto.getStoreManager()!=null) {
+        if(storeFormDto.getStoreManager()!=null && address != null) {
             StaffDAO staffDAO = new StaffDAO(entityManager);
             Staff staff = staffDAO.get(storeFormDto.getStoreManager());
             store.setManagerStaffId(staff);
-        }
-        if(address!=null) {
             store.setAddressId(address);
-            result = storeDAO.update(store);
+            result = storeDAO.saveRow(store);
         }
+
+        dbFactory.commitTransaction(entityManager,result);
         dbFactory.closeEntityManager(entityManager);
 
         return result;
@@ -220,7 +220,7 @@ public class StoreService {
         Address address = storeFormMapper.toAddressEntity(storeFormDto);
         if(address!=null && city!=null) {
             address.setCityId(city);
-            addressDAO.save(address);
+            addressDAO.saveRow(address);
             return address;
         }
         return null;

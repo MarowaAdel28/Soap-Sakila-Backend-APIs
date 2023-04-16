@@ -83,20 +83,21 @@ public class StaffService {
         StoreDAO storeDAO = new StoreDAO(entityManager);
 
         Staff staff = staffMapper.toEntity(staffFormDto);
-        System.out.println(staffFormDto.getEmail());
-
-        System.out.println(staffFormDto.getStoreID());
         Store store = storeDAO.get(staffFormDto.getStoreID());
 
         staff.setLastUpdate(new Date());
+
+        entityManager.getTransaction().begin();
 
         Address address = saveAddress(entityManager,staffFormDto);
 
         if(address!=null && store!=null) {
             staff.setAddressId(address);
             staff.setStoreId(store);
-            result = staffDAO.save(staff);
+            result = staffDAO.saveRow(staff);
         }
+
+        dbFactory.commitTransaction(entityManager,result);
         dbFactory.closeEntityManager(entityManager);
         return result;
     }
@@ -117,13 +118,17 @@ public class StaffService {
 
         staff.setStaffId(staffId);
 
+        entityManager.getTransaction().begin();
+
         Address address = saveAddress(entityManager,staffFormDto);
 
         if(address!=null && store!=null) {
             staff.setAddressId(address);
             staff.setStoreId(store);
-            result = staffDAO.update(staff);
+            result = staffDAO.saveRow(staff);
         }
+
+        dbFactory.commitTransaction(entityManager,result);
         dbFactory.closeEntityManager(entityManager);
 
         return result;
@@ -139,7 +144,7 @@ public class StaffService {
 
         if(address!=null && city!=null) {
             address.setCityId(city);
-            addressDAO.save(address);
+            addressDAO.saveRow(address);
             return address;
         }
         return null;

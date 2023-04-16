@@ -17,26 +17,19 @@ import java.util.List;
 public class CustomerService {
 
     private volatile static CustomerService customerService;
-//    private CustomerMapper customerMapper;
-
-//    private PaymentMapper paymentMapper;
 
     private CustomPaymentMapper customPaymentMapper;
 
     private CustomRentalMapper customRentalMapper;
-
-//    private RentalMapper rentalMapper;
 
     private CustomerInfoMapper customerInfoMapper;
 
     private CustomerFormMapper customerFormMapper;
 
     private CustomerService() {
-//        customerMapper = Mappers.getMapper(CustomerMapper.class);
-//        paymentMapper = Mappers.getMapper(PaymentMapper.class);
+
         customPaymentMapper = CustomPaymentMapper.getInstance();
         customRentalMapper = CustomRentalMapper.getInstance();
-//        rentalMapper = Mappers.getMapper(RentalMapper.class);
         customerInfoMapper = Mappers.getMapper(CustomerInfoMapper.class);
         customerFormMapper = Mappers.getMapper(CustomerFormMapper.class);
     }
@@ -102,15 +95,6 @@ public class CustomerService {
         return customerInfoDtoList;
     }
 
-//    public List<CustomerDto> getAllStoreCustomers(Short storeId) {
-//        DBFactory dbFactory = DBFactory.getDbFactoryInstance();
-//        EntityManager entityManager = dbFactory.createEntityManager();
-//        CustomerDAO customerDAO = new CustomerDAO(entityManager);
-//        List<Customer> customerList = customerDAO.getAllCustomersInStore(storeId);
-//        dbFactory.closeEntityManager(entityManager);
-//        return customerMapper.toDTOs(customerList);
-//    }
-
     public int getAllCustomersCount() {
         return getAllCustomers().size();
     }
@@ -122,10 +106,6 @@ public class CustomerService {
     public int getAllInactiveCustomersCount() {
         return getAllInactiveCustomers().size();
     }
-
-//    public int getAllStoreCustomersCount(short storeId) {
-//        return getAllStoreCustomers(storeId).size();
-//    }
 
     public List<PaymentDto> getCustomerPayment(short customerId) {
         DBFactory dbFactory = DBFactory.getDbFactoryInstance();
@@ -196,46 +176,28 @@ public class CustomerService {
     }
 
     public boolean addCustomer(CustomerFormDto customerDto) {
-
+        boolean isSaved = false;
         DBFactory dbFactory = DBFactory.getDbFactoryInstance();
         EntityManager entityManager = dbFactory.createEntityManager();
 
         CustomerDAO customerDAO = new CustomerDAO(entityManager);
-        CityDAO cityDAO = new CityDAO(entityManager);
-        CountryDAO countryDAO = new CountryDAO(entityManager);
-        AddressDAO addressDAO = new AddressDAO(entityManager);
         StoreDAO storeDAO = new StoreDAO(entityManager);
 
-        City city = cityDAO.get(customerDto.getCity());
-
-        Country country = countryDAO.get(customerDto.getCountry());
-
         Store store = storeDAO.get(customerDto.getStore());
-
-        if(store==null || country ==null || city==null) {
-//            System.out.println("store is null");
-            return false;
-        }
-//        Address address = saveOrUpdateAddress(false,customerDto,city,null,addressDAO);
-        Address address = customerFormMapper.toAddressEntity(customerDto);
-        address.setCityId(city);
-        address.setLastUpdate(new Date());
-
-        if(!addressDAO.save(address)) {
-            System.out.println("can't save address is null");
-            return false;
-        }
-
         Customer customer = customerFormMapper.toEntity(customerDto);
 
-//        customer.setLastUpdate(new Date());
-        customer.setAddressId(address);
-        customer.setStoreId(store);
-        boolean isSaved = customerDAO.save(customer);
+        entityManager.getTransaction().begin();
 
+        Address address = addAddress(entityManager,customerDto);
+
+        if(address != null) {
+
+            customer.setAddressId(address);
+            customer.setStoreId(store);
+            isSaved = customerDAO.saveRow(customer);
+        }
+        dbFactory.commitTransaction(entityManager,isSaved);
         dbFactory.closeEntityManager(entityManager);
-
-//        System.out.println(customer.getCreateDate());
 
         return isSaved;
 
@@ -243,57 +205,36 @@ public class CustomerService {
 
     public boolean editCustomer(Short id, CustomerFormDto customerDto) {
 
+        boolean isSaved = false;
         DBFactory dbFactory = DBFactory.getDbFactoryInstance();
         EntityManager entityManager = dbFactory.createEntityManager();
 
         CustomerDAO customerDAO = new CustomerDAO(entityManager);
-        CityDAO cityDAO = new CityDAO(entityManager);
-        CountryDAO countryDAO = new CountryDAO(entityManager);
-        AddressDAO addressDAO = new AddressDAO(entityManager);
         StoreDAO storeDAO = new StoreDAO(entityManager);
-
-        City city = cityDAO.get(customerDto.getCity());
-
-        Country country = countryDAO.get(customerDto.getCountry());
 
         Store store = storeDAO.get(customerDto.getStore());
 
-        Short originalAddressId = customerDAO.get(id).getAddressId().getAddressId();
-
         Date customerCreateDate = customerDAO.get(id).getCreateDate();
-
-        if(store==null || country ==null || city==null) {
-//            System.out.println("store is null");
-            return false;
-        }
-
-//        Address address = saveOrUpdateAddress(false,customerDto,city,originalAddressId,addressDAO);
-
-        Address address = customerFormMapper.toAddressEntity(customerDto);
-        address.setCityId(city);
-        address.setLastUpdate(new Date());
-
-        address.setAddressId(originalAddressId);
-
-        if (!addressDAO.update(address)) {
-            System.out.println("can't update address is null");
-            return false;
-        }
 
         Customer customer = customerFormMapper.toEntity(customerDto);
 
-        customer.setLastUpdate(new Date());
-        customer.setAddressId(address);
-        customer.setStoreId(store);
-        customer.setCustomerId(id);
-        customer.setCreateDate(customerCreateDate);
+        Short originalAddressId = customerDAO.get(id).getAddressId().getAddressId();
 
-        boolean isSaved = customerDAO.update(customer);
+        Address address = editAddress(entityManager,customerDto,originalAddressId);
 
+        if(address!=null) {
+            customer.setLastUpdate(new Date());
+            customer.setAddressId(address);
+            customer.setStoreId(store);
+            customer.setCustomerId(id);
+            customer.setCreateDate(customerCreateDate);
+
+            isSaved = customerDAO.saveRow(customer);
+        }
+        dbFactory.commitTransaction(entityManager,isSaved);
         dbFactory.closeEntityManager(entityManager);
 
         return isSaved;
-
     }
 
     private List<CustomerInfoDto> toDtos(List<Customer> customerList) {
@@ -310,24 +251,36 @@ public class CustomerService {
         return customerInfoDtoList;
     }
 
-//    private Address saveOrUpdateAddress(boolean isSave, CustomerFormDto customerDto,City city,Short addressId, AddressDAO addressDAO) {
-//        Address address = customerFormMapper.toAddressEntity(customerDto);
-//        address.setCityId(city);
-//        address.setLastUpdate(new Date());
-//
-//        if(!isSave) {
-//            address.setAddressId(addressId);
-//
-//            if (!addressDAO.update(address)) {
-//                System.out.println("can't update address is null");
-//                return null;
-//            }
-//        } else if (isSave) {
-//            if(!addressDAO.save(address)) {
-//                System.out.println("can't save address is null");
-//                return null;
-//            }
-//        }
-//        return address;
-//    }
+    private Address addAddress(EntityManager entityManager, CustomerFormDto customerDto) {
+        CityDAO cityDAO = new CityDAO(entityManager);
+        AddressDAO addressDAO = new AddressDAO(entityManager);
+
+        City city = cityDAO.get(customerDto.getCity());
+
+        Address address = customerFormMapper.toAddressEntity(customerDto);
+        address.setCityId(city);
+        address.setLastUpdate(new Date());
+
+        if(addressDAO.saveRow(address)) {
+            return address;
+        }
+        return null;
+    }
+
+    private Address editAddress(EntityManager entityManager, CustomerFormDto customerFormDto, Short addressId) {
+        CityDAO cityDAO = new CityDAO(entityManager);
+        AddressDAO addressDAO = new AddressDAO(entityManager);
+
+        City city = cityDAO.get(customerFormDto.getCity());
+
+        Address address = customerFormMapper.toAddressEntity(customerFormDto);
+        address.setCityId(city);
+        address.setLastUpdate(new Date());
+        address.setAddressId(addressId);
+
+        if(addressDAO.saveRow(address)) {
+            return address;
+        }
+        return null;
+    }
 }

@@ -62,16 +62,12 @@ public class FilmService {
             boolean result3 = addFilmInventory(entityManager,film,filmDto.getStore());
 
             if(!result1 || !result2 || !result3) {
-                entityManager.getTransaction().rollback();
                 result = false;
             } else{
-                entityManager.getTransaction().commit();
                 result = true;
             }
-        } else {
-            entityManager.getTransaction().rollback();
         }
-
+        dbFactory.commitTransaction(entityManager,result);
         dbFactory.closeEntityManager(entityManager);
         return result;
     }

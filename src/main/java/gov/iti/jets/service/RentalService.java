@@ -9,10 +9,10 @@ import gov.iti.jets.dto.RentalFormDto;
 import gov.iti.jets.entity.*;
 import jakarta.persistence.EntityManager;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -85,23 +85,16 @@ public class RentalService {
         EntityManager entityManager = dbFactory.createEntityManager();
 
         RentalDAO rentalDAO = new RentalDAO(entityManager);
+        PaymentDAO paymentDAO = new PaymentDAO(entityManager);
         CustomerDAO customerDAO = new CustomerDAO(entityManager);
         InventoryDAO inventoryDAO = new InventoryDAO(entityManager);
         StaffDAO staffDAO = new StaffDAO(entityManager);
-        PaymentDAO paymentDAO = new PaymentDAO(entityManager);
 
         Customer customer = customerDAO.get(rentalFormDto.getCustomer());
         Inventory inventory = inventoryDAO.get(rentalFormDto.getInventory());
         Staff staff = staffDAO.get(rentalFormDto.getStaff());
 
-        Rental rental = new Rental();
-
-        rental.setRentalDate(craeteDate(rentalFormDto.getRentalDt()));
-        rental.setReturnDate(craeteDate(rentalFormDto.getReturnDt()));
-        rental.setLastUpdate(new Date());
-        rental.setStaffId(staff);
-        rental.setCustomerId(customer);
-        rental.setInventoryId(inventory);
+        Rental rental = createRental(rentalFormDto,customer,staff,inventory);
 
         entityManager.getTransaction().begin();
 
@@ -109,31 +102,15 @@ public class RentalService {
 
         if(result) {
             // add payment
-            Payment payment = new Payment();
-
-            payment.setRentalId(rental);
-            payment.setPaymentDate(new Date());
-            payment.setCustomerId(customer);
-            payment.setAmount(rentalFormDto.getAmount());
-            payment.setLastUpdate(new Date());
-            payment.setStaffId(staff);
-
-            result = paymentDAO.saveRow(payment);
+            result = paymentDAO.saveRow(createPayment(rental,customer,staff,rentalFormDto.getAmount()));
         }
 
-        if(result) {
-            System.out.println("every thing is oky");
-            entityManager.getTransaction().commit();
-        } else {
-            System.out.println("some thing wrong");
-            entityManager.getTransaction().rollback();
-        }
-
+        dbFactory.commitTransaction(entityManager,result);
         dbFactory.closeEntityManager(entityManager);
         return result;
     }
 
-    public boolean editRental(Short rentalId, RentalFormDto rentalFormDto) {
+    public boolean editRental(Integer rentalId, RentalFormDto rentalFormDto) {
         boolean result = false;
         DBFactory dbFactory = DBFactory.getDbFactoryInstance();
         EntityManager entityManager = dbFactory.createEntityManager();
@@ -148,22 +125,8 @@ public class RentalService {
         Inventory inventory = inventoryDAO.get(rentalFormDto.getInventory());
         Staff staff = staffDAO.get(rentalFormDto.getStaff());
 
-        Rental rental = rentalDAO.get(rentalId);
-
-        if(rental == null) {
-            return false;
-        }
-
-        rental.setRentalDate(craeteDate(rentalFormDto.getRentalDt()));
-        rental.setLastUpdate(new Date());
-        rental.setStaffId(staff);
-        rental.setCustomerId(customer);
-        rental.setReturnDate(craeteDate(rentalFormDto.getReturnDt()));
-        rental.setInventoryId(inventory);
-
-        System.out.println("----------------------");
-        System.out.println(rentalFormDto.getRentalDt());
-        System.out.println("---------------------------------");
+        Rental rental = createRental(rentalFormDto,customer,staff,inventory);
+        rental.setRentalId(rentalId);
 
         entityManager.getTransaction().begin();
 
@@ -171,26 +134,10 @@ public class RentalService {
 
         if(result) {
             // add payment
-            Payment payment = new Payment();
-
-            payment.setRentalId(rental);
-            payment.setPaymentDate(new Date());
-            payment.setCustomerId(customer);
-            payment.setAmount(rentalFormDto.getAmount());
-            payment.setLastUpdate(new Date());
-            payment.setStaffId(staff);
-
-            result = paymentDAO.saveRow(payment);
+            result = paymentDAO.saveRow(createPayment(rental,customer,staff,rentalFormDto.getAmount()));
         }
 
-        if(result) {
-            System.out.println("every thing is oky");
-            entityManager.getTransaction().commit();
-        } else {
-            System.out.println("some thing wrong");
-            entityManager.getTransaction().rollback();
-        }
-
+        dbFactory.commitTransaction(entityManager,result);
         dbFactory.closeEntityManager(entityManager);
         return result;
     }
@@ -204,5 +151,32 @@ public class RentalService {
             throw new RuntimeException(e);
         }
         return date;
+    }
+
+    private Rental createRental(RentalFormDto rentalFormDto,Customer customer,Staff staff, Inventory inventory) {
+
+        Rental rental = new Rental();
+
+        rental.setRentalDate(craeteDate(rentalFormDto.getRentalDt()));
+        rental.setReturnDate(craeteDate(rentalFormDto.getReturnDt()));
+        rental.setLastUpdate(new Date());
+        rental.setStaffId(staff);
+        rental.setCustomerId(customer);
+        rental.setInventoryId(inventory);
+        return rental;
+    }
+
+    private Payment createPayment(Rental rental, Customer customer, Staff staff, BigDecimal amount) {
+
+        Payment payment = new Payment();
+
+        payment.setRentalId(rental);
+        payment.setPaymentDate(new Date());
+        payment.setCustomerId(customer);
+        payment.setAmount(amount);
+        payment.setLastUpdate(new Date());
+        payment.setStaffId(staff);
+
+        return  payment;
     }
 }
