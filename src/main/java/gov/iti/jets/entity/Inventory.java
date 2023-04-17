@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import jakarta.persistence.Basic;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -44,7 +43,7 @@ import lombok.*;
     @NamedQuery(name = "Inventory.findAll", query = "SELECT i FROM Inventory i")
     , @NamedQuery(name = "Inventory.findByInventoryId", query = "SELECT i FROM Inventory i WHERE i.inventoryId = :inventoryId")
     , @NamedQuery(name = "Inventory.findByLastUpdate", query = "SELECT i FROM Inventory i WHERE i.lastUpdate = :lastUpdate")})
-public class Inventory implements Serializable {
+public class Inventory extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

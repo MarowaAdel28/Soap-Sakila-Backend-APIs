@@ -22,6 +22,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.*;
 
 /**
@@ -33,7 +34,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+//@ToString
 @Entity
 @Table(name = "actor")
 @NamedQueries({
@@ -42,7 +43,7 @@ import lombok.*;
     , @NamedQuery(name = "Actor.findByFirstName", query = "SELECT a FROM Actor a WHERE a.firstName = :firstName")
     , @NamedQuery(name = "Actor.findByLastName", query = "SELECT a FROM Actor a WHERE a.lastName = :lastName")
     , @NamedQuery(name = "Actor.findByLastUpdate", query = "SELECT a FROM Actor a WHERE a.lastUpdate = :lastUpdate")})
-public class Actor implements Serializable {
+public class Actor extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

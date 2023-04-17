@@ -39,7 +39,7 @@ import lombok.*;
     , @NamedQuery(name = "Category.findByCategoryId", query = "SELECT c FROM Category c WHERE c.categoryId = :categoryId")
     , @NamedQuery(name = "Category.findByName", query = "SELECT c FROM Category c WHERE c.name = :name")
     , @NamedQuery(name = "Category.findByLastUpdate", query = "SELECT c FROM Category c WHERE c.lastUpdate = :lastUpdate")})
-public class Category implements Serializable {
+public class Category extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,13 +47,16 @@ public class Category implements Serializable {
     @Basic(optional = false)
     @Column(name = "category_id")
     private Short categoryId;
+
     @Basic(optional = false)
     @Column(name = "name")
     private String name;
+
     @Basic(optional = false)
     @Column(name = "last_update")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdate;
+
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<FilmCategory> filmCategoryList;
 

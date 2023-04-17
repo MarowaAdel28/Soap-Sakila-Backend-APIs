@@ -42,7 +42,7 @@ import lombok.*;
     , @NamedQuery(name = "Country.findByCountryId", query = "SELECT c FROM Country c WHERE c.countryId = :countryId")
     , @NamedQuery(name = "Country.findByCountry", query = "SELECT c FROM Country c WHERE c.country = :country")
     , @NamedQuery(name = "Country.findByLastUpdate", query = "SELECT c FROM Country c WHERE c.lastUpdate = :lastUpdate")})
-public class Country implements Serializable {
+public class Country extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

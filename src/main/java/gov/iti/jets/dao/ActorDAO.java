@@ -2,14 +2,15 @@ package gov.iti.jets.dao;
 
 import gov.iti.jets.entity.Actor;
 import gov.iti.jets.entity.FilmActor;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 
 import java.util.List;
 
 public class ActorDAO extends BaseDAO<Actor>{
 
-    public ActorDAO() {
-        super(Actor.class);
+    public ActorDAO(EntityManager entityManager) {
+        super(Actor.class,entityManager);
     }
 
     public List<Actor> getAllActors() {
@@ -20,8 +21,8 @@ public class ActorDAO extends BaseDAO<Actor>{
     public List<Actor> searchActorByName(String name) {
         String queryString = "from Actor a where a.firstName like :fname or a.lastName like :lname";
         Query q = entityManager.createQuery(queryString)
-                .setParameter("fname", name)
-                .setParameter("lname", name);
+                .setParameter("fname", name.toUpperCase())
+                .setParameter("lname", name.toUpperCase());
         return (List<Actor>) q.getResultList();
     }
 
@@ -33,13 +34,11 @@ public class ActorDAO extends BaseDAO<Actor>{
         return (Actor) q.getSingleResult();
     }
 
-    public List<FilmActor> getActorFilmList(short actorId) {
-        Actor actor = get(actorId);
+    public List<FilmActor> getActorFilmList(Actor actor) {
         return actor.getFilmActorList();
     }
 
-    public List<FilmActor> getActorFilmListByLanguage(short actorId, String languageName) {
-        Actor actor = get(actorId);
+    public List<FilmActor> getActorFilmListByLanguage(Actor actor, String languageName) {
         List<FilmActor> filmActorList = actor.getFilmActorList().stream()
                 .filter((film)->
                     film.getFilm().getLanguageId().getName().equals(languageName)
@@ -47,8 +46,7 @@ public class ActorDAO extends BaseDAO<Actor>{
         return filmActorList;
     }
 
-    public List<FilmActor> getActorFilmListByRating(short actorId, String rate) {
-        Actor actor = get(actorId);
+    public List<FilmActor> getActorFilmListByRating(Actor actor, String rate) {
         List<FilmActor> filmActorList = actor.getFilmActorList().stream()
                 .filter((film)->
                         film.getFilm().getRating().equals(rate)
@@ -56,26 +54,46 @@ public class ActorDAO extends BaseDAO<Actor>{
         return filmActorList;
     }
 
-    public List<FilmActor> getActorFilmList(String fname, String lname) {
-        Actor actor = getActorByName(fname,lname);
-        return actor.getFilmActorList();
+//    public List<FilmActor> getActorFilmList(Actor actor) {
+//        return actor.getFilmActorList();
+//    }
+//
+//    public List<FilmActor> getActorFilmListByLanguage(Actor actor, String languageName) {
+//        List<FilmActor> filmActorList = actor.getFilmActorList().stream()
+//                .filter((film)->
+//                        film.getFilm().getLanguageId().getName().equals(languageName)
+//                ).toList();
+//        return filmActorList;
+//    }
+//
+//    public List<FilmActor> getActorFilmListByRating(Actor actor, String rate) {
+//
+//        List<FilmActor> filmActorList = actor.getFilmActorList().stream()
+//                .filter((film)->
+//                        film.getFilm().getRating().equals(rate)
+//                ).toList();
+//        return filmActorList;
+//    }
+
+    public int getActorFilmCount(Actor actor) {
+
+        return actor.getFilmActorList().size();
     }
 
-    public List<FilmActor> getActorFilmListByLanguage(String fname, String lname, String languageName) {
-        Actor actor = getActorByName(fname,lname);
+    public int getActorFilmCountByLanguage(Actor actor, String languageName) {
+
         List<FilmActor> filmActorList = actor.getFilmActorList().stream()
                 .filter((film)->
                         film.getFilm().getLanguageId().getName().equals(languageName)
                 ).toList();
-        return filmActorList;
+        return filmActorList.size();
     }
 
-    public List<FilmActor> getActorFilmListByRating(String fname, String lname, String rate) {
-        Actor actor = getActorByName(fname,lname);
+    public int getActorFilmCountByRating(Actor actor, String rate) {
         List<FilmActor> filmActorList = actor.getFilmActorList().stream()
                 .filter((film)->
                         film.getFilm().getRating().equals(rate)
                 ).toList();
-        return filmActorList;
+        return filmActorList.size();
     }
 }

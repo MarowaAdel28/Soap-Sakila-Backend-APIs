@@ -42,7 +42,7 @@ import lombok.*;
     , @NamedQuery(name = "City.findByCityId", query = "SELECT c FROM City c WHERE c.cityId = :cityId")
     , @NamedQuery(name = "City.findByCity", query = "SELECT c FROM City c WHERE c.city = :city")
     , @NamedQuery(name = "City.findByLastUpdate", query = "SELECT c FROM City c WHERE c.lastUpdate = :lastUpdate")})
-public class City implements Serializable {
+public class City extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,15 +50,19 @@ public class City implements Serializable {
     @Basic(optional = false)
     @Column(name = "city_id")
     private Short cityId;
+
     @Basic(optional = false)
     @Column(name = "city")
     private String city;
+
     @Basic(optional = false)
     @Column(name = "last_update")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdate;
+
     @OneToMany(mappedBy = "cityId", fetch = FetchType.LAZY)
     private List<Address> addressList = new ArrayList<>();
+
     @JoinColumn(name = "country_id", referencedColumnName = "country_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Country countryId;

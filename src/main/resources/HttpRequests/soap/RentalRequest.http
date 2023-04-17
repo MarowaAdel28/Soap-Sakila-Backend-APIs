@@ -1,0 +1,87 @@
+POST http://localhost:8070/apis/soap/rental HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:AllRentals/>
+    </soap:Body>
+</soap:Envelope>
+
+###
+
+POST http://localhost:8070/apis/soap/rental HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:RentalById>
+            <rentalId>1</rentalId>
+        </jets:RentalById>
+    </soap:Body>
+</soap:Envelope>
+
+###
+
+POST http://localhost:8070/apis/soap/rental HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:addRental>
+            <rental>
+                <customer>607</customer>
+                <inventory>4</inventory>
+                <staff>4</staff>
+                <amount>500</amount>
+                <returnDt>6</returnDt>
+            </rental>
+        </jets:addRental>
+    </soap:Body>
+</soap:Envelope>
+
+###
+
+POST http://localhost:8070/apis/soap/rental HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:editRental>
+            <rentalId>16057</rentalId>
+            <rental>
+                <customer>607</customer>
+                <inventory>1</inventory>
+                <staff>4</staff>
+                <amount>200</amount>
+                <returnDt>5</returnDt>
+            </rental>
+        </jets:editRental>
+    </soap:Body>
+</soap:Envelope>
+
+###
+#Sun Apr 16 16:27:18 EET 2023
+#mm dd yyyy HH:mm:ss
+
+POST http://localhost:8070/apis/soap/rental HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:paymentList>
+            <rentalId>16051</rentalId>
+        </jets:paymentList>
+    </soap:Body>
+</soap:Envelope>
+
+###

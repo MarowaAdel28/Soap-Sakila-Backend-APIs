@@ -52,7 +52,7 @@ import lombok.*;
     , @NamedQuery(name = "Film.findByRating", query = "SELECT f FROM Film f WHERE f.rating = :rating")
     , @NamedQuery(name = "Film.findBySpecialFeatures", query = "SELECT f FROM Film f WHERE f.specialFeatures = :specialFeatures")
     , @NamedQuery(name = "Film.findByLastUpdate", query = "SELECT f FROM Film f WHERE f.lastUpdate = :lastUpdate")})
-public class Film implements Serializable {
+public class Film extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -70,8 +70,9 @@ public class Film implements Serializable {
     private String description;
 
     @Column(name = "release_year")
-    @Temporal(TemporalType.DATE)
-    private Date releaseYear;
+    private int releaseYear;
+//    @Temporal(TemporalType.DATE)
+//    private Date releaseYear;
 
     @Basic(optional = false)
     @Column(name = "rental_duration")

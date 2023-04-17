@@ -52,7 +52,7 @@ import lombok.*;
     , @NamedQuery(name = "Staff.findByUsername", query = "SELECT s FROM Staff s WHERE s.username = :username")
     , @NamedQuery(name = "Staff.findByPassword", query = "SELECT s FROM Staff s WHERE s.password = :password")
     , @NamedQuery(name = "Staff.findByLastUpdate", query = "SELECT s FROM Staff s WHERE s.lastUpdate = :lastUpdate")})
-public class Staff implements Serializable {
+public class Staff extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
