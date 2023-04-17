@@ -1,8 +1,9 @@
 package gov.iti.jets.dto;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.XmlType;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -15,9 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 @XmlRootElement
-//@XmlType
-@Getter
-@Setter
+
 public class PaymentDto implements Serializable {
     private Short paymentId;
     private BigDecimal amount;

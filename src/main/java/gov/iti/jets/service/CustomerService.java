@@ -111,7 +111,11 @@ public class CustomerService {
         DBFactory dbFactory = DBFactory.getDbFactoryInstance();
         EntityManager entityManager = dbFactory.createEntityManager();
         CustomerDAO customerDAO = new CustomerDAO(entityManager);
-        List<Payment> paymentList = customerDAO.get(customerId).getPaymentList();
+        Customer customer = customerDAO.get(customerId);
+        if(customer == null) {
+            return null;
+        }
+        List<Payment> paymentList = customer.getPaymentList();
         List<PaymentDto> paymentDtoList = new ArrayList<>();
         paymentList.forEach(payment -> {
             paymentDtoList.add(customPaymentMapper.toPaymentDto(payment));
@@ -124,7 +128,12 @@ public class CustomerService {
         DBFactory dbFactory = DBFactory.getDbFactoryInstance();
         EntityManager entityManager = dbFactory.createEntityManager();
         CustomerDAO customerDAO = new CustomerDAO(entityManager);
-        List<Payment> paymentList = customerDAO.get(customerId).getPaymentList();
+
+        Customer customer = customerDAO.get(customerId);
+        if(customer == null) {
+            return new BigDecimal(0);
+        }
+        List<Payment> paymentList = customer.getPaymentList();
 
         BigDecimal totalAmount = paymentList.stream().map(Payment::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
 
@@ -137,7 +146,13 @@ public class CustomerService {
         DBFactory dbFactory = DBFactory.getDbFactoryInstance();
         EntityManager entityManager = dbFactory.createEntityManager();
         CustomerDAO customerDAO = new CustomerDAO(entityManager);
-        List<Rental> rentalList = customerDAO.get(customerId).getRentalList();
+
+        Customer customer = customerDAO.get(customerId);
+        if(customer == null) {
+            return null;
+        }
+
+        List<Rental> rentalList = customer.getRentalList();
         List<RentalDto> rentalDtoList = new ArrayList<>();
 
         for (Rental rental : rentalList) {
@@ -153,7 +168,11 @@ public class CustomerService {
         EntityManager entityManager = dbFactory.createEntityManager();
         CustomerDAO customerDAO = new CustomerDAO(entityManager);
 
-        List<Rental> rentalList = customerDAO.get(customerId).getRentalList();
+        Customer customer = customerDAO.get(customerId);
+        if(customer == null) {
+            return 0;
+        }
+        List<Rental> rentalList = customer.getRentalList();
 
         int count = rentalList.size();
 
@@ -212,13 +231,13 @@ public class CustomerService {
         CustomerDAO customerDAO = new CustomerDAO(entityManager);
         StoreDAO storeDAO = new StoreDAO(entityManager);
 
+        entityManager.getTransaction().begin();
+
         Store store = storeDAO.get(customerDto.getStore());
 
-        Date customerCreateDate = customerDAO.get(id).getCreateDate();
+        Customer customer = customerDAO.get(id);
 
-        Customer customer = customerFormMapper.toEntity(customerDto);
-
-        Short originalAddressId = customerDAO.get(id).getAddressId().getAddressId();
+        Short originalAddressId = customer.getAddressId().getAddressId();
 
         Address address = editAddress(entityManager,customerDto,originalAddressId);
 
@@ -226,8 +245,10 @@ public class CustomerService {
             customer.setLastUpdate(new Date());
             customer.setAddressId(address);
             customer.setStoreId(store);
-            customer.setCustomerId(id);
-            customer.setCreateDate(customerCreateDate);
+            customer.setActive(customerDto.isActive());
+            customer.setEmail(customerDto.getEmail());
+            customer.setFirstName(customerDto.getFirstName());
+            customer.setLastName(customer.getLastName());
 
             isSaved = customerDAO.saveRow(customer);
         }
@@ -273,10 +294,14 @@ public class CustomerService {
 
         City city = cityDAO.get(customerFormDto.getCity());
 
-        Address address = customerFormMapper.toAddressEntity(customerFormDto);
+        Address address = addressDAO.get(addressId);
+
+        address.setDistrict(customerFormDto.getDistrict());
+        address.setAddress(customerFormDto.getAddress());
+        address.setPhone(customerFormDto.getPhone());
+        address.setPostalCode(customerFormDto.getPostalCode());
         address.setCityId(city);
         address.setLastUpdate(new Date());
-        address.setAddressId(addressId);
 
         if(addressDAO.saveRow(address)) {
             return address;

@@ -14,6 +14,6 @@ public class PaymentDAO extends BaseDAO<Payment>{
     public List<Payment> getAll() {
         String queryString = "from Payment p ";
         Query q = entityManager.createQuery(queryString);
-        return q.getResultList();
+        return (List<Payment>) q.getResultList();
     }
 }

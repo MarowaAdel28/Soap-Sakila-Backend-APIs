@@ -1,3 +1,58 @@
+POST http://localhost:8070/apis/soap/film HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:FilmText>
+            <filmId>1018</filmId>
+        </jets:FilmText>
+    </soap:Body>
+</soap:Envelope>
+
+###
+
+POST http://localhost:8070/apis/soap/film HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:AllFilmText/>
+    </soap:Body>
+</soap:Envelope>
+
+###
+
+POST http://localhost:8070/apis/soap/film HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:FilmById>
+            <filmId>1018</filmId>
+        </jets:FilmById>
+    </soap:Body>
+</soap:Envelope>
+
+###
+
+POST http://localhost:8070/apis/soap/film HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:AllFilms/>
+    </soap:Body>
+</soap:Envelope>
+
+###
 
 POST http://localhost:8070/apis/soap/film HTTP/1.1
 Content-Type: text/xml
@@ -23,7 +78,7 @@ Content-Type: text/xml
     <soap:Body>
         <jets:addFilm>
             <film>
-                <title>ZORRO ARK S3</title>
+                <title>ZORRO ARK S4</title>
                 <description>A Intrepid Panorama of a Mad Scientist And a Boy who must Redeem a Boy in A Monastery</description>
                 <releaseYear>2008</releaseYear>
                 <rentalDuration>1</rentalDuration>
@@ -43,20 +98,5 @@ Content-Type: text/xml
 
 ###
 
-
-POST http://localhost:8070/apis/soap/film HTTP/1.1
-Content-Type: text/xml
-
-<soap:Envelope
-xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:jets="http://services.soap.api.jets.iti.gov/">
-<soap:Body>
-    <jets:getFilmText>
-        <arg0>1018</arg0>
-    </jets:getFilmText>
-</soap:Body>
-</soap:Envelope>
-
-###
 
 

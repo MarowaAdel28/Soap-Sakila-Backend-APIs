@@ -1,15 +1,16 @@
 package gov.iti.jets.service;
 
 import gov.iti.jets.dao.*;
+import gov.iti.jets.dto.FilmDto;
 import gov.iti.jets.dto.FilmFormDto;
 import gov.iti.jets.entity.*;
 import gov.iti.jets.mapper.FilmFormMapper;
 import gov.iti.jets.mapper.FilmMapper;
-//import gov.iti.jets.views.NicerButSlowerFilmList;
 import jakarta.persistence.EntityManager;
 import org.mapstruct.factory.Mappers;
 
 import java.util.Date;
+import java.util.List;
 
 public class FilmService {
     private volatile static FilmService filmService;
@@ -33,6 +34,47 @@ public class FilmService {
         return filmService;
     }
 
+    public FilmText getFilmText(Short filmId) {
+        DBFactory dbFactory = DBFactory.getDbFactoryInstance();
+        EntityManager entityManager = dbFactory.createEntityManager();
+        FilmTextDAO filmTextDAO = new FilmTextDAO(entityManager);
+        FilmText filmText = filmTextDAO.get(filmId);
+        dbFactory.closeEntityManager(entityManager);
+        return filmText;
+    }
+
+    public List<FilmText> getAllFilmText() {
+        DBFactory dbFactory = DBFactory.getDbFactoryInstance();
+        EntityManager entityManager = dbFactory.createEntityManager();
+        FilmTextDAO filmTextDAO = new FilmTextDAO(entityManager);
+        List<FilmText> filmTextList = filmTextDAO.getAll();
+        dbFactory.closeEntityManager(entityManager);
+        return filmTextList;
+    }
+
+    public FilmDto getById(Short filmId) {
+        DBFactory dbFactory = DBFactory.getDbFactoryInstance();
+        EntityManager entityManager = dbFactory.createEntityManager();
+
+        FilmDAO filmDAO = new FilmDAO(entityManager);
+        Film film = filmDAO.get(filmId);
+        FilmDto filmDto = filmMapper.toDto(film);
+
+        dbFactory.closeEntityManager(entityManager);
+        return filmDto;
+    }
+
+    public List<FilmDto> getAll() {
+        DBFactory dbFactory = DBFactory.getDbFactoryInstance();
+        EntityManager entityManager = dbFactory.createEntityManager();
+
+        FilmDAO filmDAO = new FilmDAO(entityManager);
+        List<Film> filmList = filmDAO.getAll();
+        List<FilmDto> filmDtoList = filmMapper.toDTOs(filmList);
+
+        dbFactory.closeEntityManager(entityManager);
+        return filmDtoList;
+    }
     public boolean addFilm(FilmFormDto filmDto) {
 
         DBFactory dbFactory = DBFactory.getDbFactoryInstance();
@@ -70,23 +112,6 @@ public class FilmService {
         dbFactory.commitTransaction(entityManager,result);
         dbFactory.closeEntityManager(entityManager);
         return result;
-    }
-//    public NicerButSlowerFilmList getFilm(short filmId) {
-//        DBFactory dbFactory = DBFactory.getDbFactoryInstance();
-//        EntityManager entityManager = dbFactory.createEntityManager();
-//        NicerFilmListDAO nicerFilmListDAO = new NicerFilmListDAO(entityManager);
-//        NicerButSlowerFilmList nicerButSlowerFilmList = nicerFilmListDAO.get(filmId);
-//        dbFactory.closeEntityManager(entityManager);
-//        return nicerButSlowerFilmList;
-//    }
-
-    public FilmText getFilmText(Short filmId) {
-        DBFactory dbFactory = DBFactory.getDbFactoryInstance();
-        EntityManager entityManager = dbFactory.createEntityManager();
-        FilmTextDAO filmTextDAO = new FilmTextDAO(entityManager);
-        FilmText filmText = filmTextDAO.get(filmId);
-        dbFactory.closeEntityManager(entityManager);
-        return filmText;
     }
 
     private boolean addFilmInventory(EntityManager entityManager,Film film, Short storeId) {

@@ -111,20 +111,25 @@ public class StaffService {
         StaffDAO staffDAO = new StaffDAO(entityManager);
         StoreDAO storeDAO = new StoreDAO(entityManager);
 
-        Staff staff = staffMapper.toEntity(staffFormDto);
+        entityManager.getTransaction().begin();
+
         Store store = storeDAO.get(staffFormDto.getStoreID());
 
-        staff.setLastUpdate(new Date());
-
-        staff.setStaffId(staffId);
-
-        entityManager.getTransaction().begin();
+        Staff staff = staffDAO.get(staffId);
 
         Address address = saveAddress(entityManager,staffFormDto);
 
         if(address!=null && store!=null) {
             staff.setAddressId(address);
             staff.setStoreId(store);
+            staff.setLastUpdate(new Date());
+            staff.setActive(staffFormDto.isActive());
+            staff.setEmail(staffFormDto.getEmail());
+            staff.setFirstName(staffFormDto.getFirstName());
+            staff.setLastName(staffFormDto.getLastName());
+            staff.setUsername(staffFormDto.getUsername());
+            staff.setPassword(staffFormDto.getPassword());
+
             result = staffDAO.saveRow(staff);
         }
 

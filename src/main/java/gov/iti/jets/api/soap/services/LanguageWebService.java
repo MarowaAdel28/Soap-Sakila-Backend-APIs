@@ -23,6 +23,11 @@ public class LanguageWebService {
 //        return languageService.getById(id);
 //    }
 
+
+    @WebMethod(operationName = "languageById")
+    public LanguageDto getLanguage(@WebParam(name = "languageId") Short id) {
+        return languageService.getById(id);
+    }
     @WebMethod(operationName = "AllLanguages")
     public List<LanguageDto> getAll() {
         return languageService.getAll();

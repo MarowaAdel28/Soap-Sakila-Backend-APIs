@@ -23,6 +23,11 @@ public class RentalWebService {
 //        return rentalService.getById(id);
 //    }
 
+    @WebMethod(operationName = "RentalById")
+    public RentalDto getRental(@WebParam(name = "rentalId") Short id) {
+        return rentalService.getById(id);
+    }
+
     @WebMethod(operationName = "AllRentals")
     public List<RentalDto> getAll() {
         return rentalService.getAll();

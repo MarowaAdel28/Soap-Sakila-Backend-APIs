@@ -82,7 +82,7 @@ Content-Type: text/xml
     <soap:Body>
         <jets:addStore>
             <store>
-                <address>LabLab</address>
+                <address>LabLab44</address>
                 <district>El-Salam</district>
                 <city>3</city>
                 <country>101</country>
@@ -104,15 +104,15 @@ Content-Type: text/xml
         xmlns:jets="http://services.soap.api.jets.iti.gov/">
     <soap:Body>
         <jets:editStore>
-            <storeId>4</storeId>
+            <storeId>5</storeId>
             <store>
-                <address>LabLab2</address>
+                <address>80 MySql Workbanch</address>
                 <district>El-Salam</district>
                 <city>3</city>
                 <country>101</country>
                 <postalCode>45454</postalCode>
                 <phone>010214541</phone>
-                <storeManager>4</storeManager>
+                <storeManager>3</storeManager>
             </store>
         </jets:editStore>
     </soap:Body>

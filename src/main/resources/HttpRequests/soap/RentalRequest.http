@@ -18,14 +18,28 @@ Content-Type: text/xml
         xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
         xmlns:jets="http://services.soap.api.jets.iti.gov/">
     <soap:Body>
+        <jets:RentalById>
+            <rentalId>1</rentalId>
+        </jets:RentalById>
+    </soap:Body>
+</soap:Envelope>
+
+###
+
+POST http://localhost:8070/apis/soap/rental HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
         <jets:addRental>
             <rental>
-                <customer>601</customer>
-                <inventory>5</inventory>
+                <customer>607</customer>
+                <inventory>4</inventory>
                 <staff>4</staff>
-                <amount>100</amount>
-                <rentalDt>04 16 2023 04:48:00</rentalDt>
-                <returnDt>04 21 2023 04:48:00</returnDt>
+                <amount>500</amount>
+                <returnDt>6</returnDt>
             </rental>
         </jets:addRental>
     </soap:Body>
@@ -41,14 +55,13 @@ Content-Type: text/xml
         xmlns:jets="http://services.soap.api.jets.iti.gov/">
     <soap:Body>
         <jets:editRental>
-            <rentalId>16051</rentalId>
+            <rentalId>16057</rentalId>
             <rental>
                 <customer>607</customer>
                 <inventory>1</inventory>
-                <staff>2</staff>
+                <staff>4</staff>
                 <amount>200</amount>
-                <rentalDt>04 16 2023 04:48:00</rentalDt>
-                <returnDt>04 21 2023 04:48:00</returnDt>
+                <returnDt>5</returnDt>
             </rental>
         </jets:editRental>
     </soap:Body>

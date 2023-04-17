@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -94,7 +95,9 @@ public class RentalService {
         Inventory inventory = inventoryDAO.get(rentalFormDto.getInventory());
         Staff staff = staffDAO.get(rentalFormDto.getStaff());
 
-        Rental rental = createRental(rentalFormDto,customer,staff,inventory);
+        Rental rental = new Rental();
+        rental.setRentalDate(new Date());
+        rental = createRental(rental,rentalFormDto,customer,staff,inventory);
 
         entityManager.getTransaction().begin();
 
@@ -125,7 +128,10 @@ public class RentalService {
         Inventory inventory = inventoryDAO.get(rentalFormDto.getInventory());
         Staff staff = staffDAO.get(rentalFormDto.getStaff());
 
-        Rental rental = createRental(rentalFormDto,customer,staff,inventory);
+        Rental rental = rentalDAO.get(rentalId);
+
+        rental = createRental(rental,rentalFormDto,customer,staff,inventory);
+
         rental.setRentalId(rentalId);
 
         entityManager.getTransaction().begin();
@@ -153,12 +159,12 @@ public class RentalService {
         return date;
     }
 
-    private Rental createRental(RentalFormDto rentalFormDto,Customer customer,Staff staff, Inventory inventory) {
+    private Rental createRental(Rental rental, RentalFormDto rentalFormDto,Customer customer,Staff staff, Inventory inventory) {
 
-        Rental rental = new Rental();
-
-        rental.setRentalDate(craeteDate(rentalFormDto.getRentalDt()));
-        rental.setReturnDate(craeteDate(rentalFormDto.getReturnDt()));
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.DAY_OF_MONTH, rentalFormDto.getReturnDt());
+        rental.setReturnDate(calendar.getTime());
         rental.setLastUpdate(new Date());
         rental.setStaffId(staff);
         rental.setCustomerId(customer);

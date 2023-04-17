@@ -162,6 +162,7 @@ public class StoreService {
 
         StoreDAO storeDAO = new StoreDAO(entityManager);
 
+        entityManager.getTransaction().begin();
         Address address = saveAddress(entityManager,storeFormDto);
 
         boolean result = false;
@@ -174,7 +175,7 @@ public class StoreService {
             Staff staff = staffDAO.get(storeFormDto.getStoreManager());
             store.setManagerStaffId(staff);
             store.setAddressId(address);
-            result = storeDAO.save(store);
+            result = storeDAO.saveRow(store);
         }
 
         dbFactory.commitTransaction(entityManager,result);

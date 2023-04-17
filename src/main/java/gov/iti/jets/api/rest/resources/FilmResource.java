@@ -6,7 +6,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 
-@Path("films")
+//@Path("films")
 public class FilmResource {
 
     FilmService filmService;
@@ -15,9 +15,9 @@ public class FilmResource {
         filmService = FilmService.getFilmServiceInstance();
     }
 
-    @GET
-    @Path("{id:[0-9]+}")
-    public NicerButSlowerFilmList getFilmInfoById(@PathParam("id") short id) {
-        return filmService.getFilm(id);
-    }
+//    @GET
+//    @Path("{id:[0-9]+}")
+//    public NicerButSlowerFilmList getFilmInfoById(@PathParam("id") short id) {
+//        return filmService.getFilm(id);
+//    }
 }

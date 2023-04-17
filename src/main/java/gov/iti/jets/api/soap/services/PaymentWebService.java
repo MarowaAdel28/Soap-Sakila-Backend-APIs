@@ -22,10 +22,12 @@ public class PaymentWebService {
 //        return paymentService.getById(id);
 //    }
 
+    @WebMethod(operationName = "PaymentById")
+    public PaymentDto getPayment(@WebParam(name = "paymentId") Short id) {
+        return paymentService.getById(id);
+    }
     @WebMethod(operationName = "AllPayments")
     public List<PaymentDto> getAll() {
-//        PaymentDto paymentDto = paymentService.getAll().get(0);
-//        System.out.println(paymentDto);
         return paymentService.getAll();
     }
 

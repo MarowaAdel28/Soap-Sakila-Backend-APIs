@@ -52,7 +52,6 @@ public class PaymentService {
         PaymentDAO paymentDAO = new PaymentDAO(entityManager);
 
         List<Payment> paymentList = paymentDAO.getAll();
-        paymentList = paymentList.subList(0,100);
 
         List<PaymentDto> paymentDtoList = new ArrayList<>();
 

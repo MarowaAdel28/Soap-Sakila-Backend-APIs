@@ -92,7 +92,7 @@ Content-Type: text/xml
         xmlns:jets="http://services.soap.api.jets.iti.gov/">
     <soap:Body>
         <jets:addCategory>
-            <categoryName>Kids</categoryName>
+            <categoryName>Kids2</categoryName>
         </jets:addCategory>
     </soap:Body>
 </soap:Envelope>
@@ -106,8 +106,8 @@ Content-Type: text/xml
         xmlns:jets="http://services.soap.api.jets.iti.gov/">
     <soap:Body>
         <jets:editCategory>
-            <categoryId>17</categoryId>
-            <categoryName>Kides</categoryName>
+            <categoryId>20</categoryId>
+            <categoryName>Kides2</categoryName>
         </jets:editCategory>
     </soap:Body>
 </soap:Envelope>

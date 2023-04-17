@@ -28,6 +28,10 @@ public class StaffWebService {
         return service.getAll();
     }
 
+    @WebMethod(operationName = "StaffById")
+    public StaffDto getStaff(@WebParam(name = "staffId") Short id) {
+        return service.getById(id);
+    }
     public boolean addStaff(@WebParam(name = "staff") StaffFormDto staffFormDto) {
         return service.addStaff(staffFormDto);
     }

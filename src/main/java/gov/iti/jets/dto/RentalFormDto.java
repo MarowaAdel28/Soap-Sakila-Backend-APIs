@@ -18,6 +18,5 @@ public class RentalFormDto {
     private Short inventory;
     private Short staff;
     private BigDecimal amount;
-    private String rentalDt;
-    private String returnDt;
+    private int returnDt;
 }

@@ -16,4 +16,8 @@ public class RentalDAO extends BaseDAO<Rental> {
         Query q = entityManager.createQuery(queryString);
         return q.getResultList();
     }
+
+    public Rental get(Integer id) {
+        return entityManager.find(Rental.class,id);
+    }
 }
