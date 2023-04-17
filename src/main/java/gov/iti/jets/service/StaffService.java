@@ -11,6 +11,7 @@ import gov.iti.jets.entity.Staff;
 import gov.iti.jets.entity.Store;
 import gov.iti.jets.mapper.AddressMapper;
 import gov.iti.jets.mapper.StaffMapper;
+import gov.iti.jets.util.Utility;
 import jakarta.persistence.EntityManager;
 import org.mapstruct.factory.Mappers;
 
@@ -94,6 +95,7 @@ public class StaffService {
         if(address!=null && store!=null) {
             staff.setAddressId(address);
             staff.setStoreId(store);
+            staff.setPassword(Utility.hashPassword(staffFormDto.getPassword()));
             result = staffDAO.saveRow(staff);
         }
 
@@ -128,7 +130,7 @@ public class StaffService {
             staff.setFirstName(staffFormDto.getFirstName());
             staff.setLastName(staffFormDto.getLastName());
             staff.setUsername(staffFormDto.getUsername());
-            staff.setPassword(staffFormDto.getPassword());
+            staff.setPassword(Utility.hashPassword(staffFormDto.getPassword()));
 
             result = staffDAO.saveRow(staff);
         }

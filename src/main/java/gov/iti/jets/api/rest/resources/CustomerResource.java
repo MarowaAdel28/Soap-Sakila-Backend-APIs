@@ -6,6 +6,7 @@ import gov.iti.jets.dto.PaymentDto;
 import gov.iti.jets.dto.RentalDto;
 import gov.iti.jets.service.CustomerService;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 
 import java.util.List;
 
@@ -19,18 +20,21 @@ public class CustomerResource {
     }
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public List<CustomerInfoDto> getAll() {
         return customerService.getAllCustomers();
     }
 
     @GET
     @Path("{id:[0-9]+}")
+    @Produces(MediaType.APPLICATION_JSON)
     public CustomerInfoDto getById(@PathParam("id") short id) {
         return customerService.getCustomerById(id);
     }
 
     @GET
     @Path("filter")
+    @Produces(MediaType.APPLICATION_JSON)
     public List<CustomerInfoDto> filterCustomer(@QueryParam("isActive") boolean isActive) {
 
         if(isActive) {
@@ -46,12 +50,14 @@ public class CustomerResource {
 
     @GET
     @Path("{id:[0-9]+}/payment")
+    @Produces(MediaType.APPLICATION_JSON)
     public List<PaymentDto> getCustomerPayment(@PathParam("id") short customerId) {
         return customerService.getCustomerPayment(customerId);
     }
 
     @GET
     @Path("{id:[0-9]+}/rental")
+    @Produces(MediaType.APPLICATION_JSON)
     public List<RentalDto> getCustomerRental(@PathParam("id") short customerId) {
         return customerService.getCustomerRental(customerId);
     }
@@ -60,6 +66,7 @@ public class CustomerResource {
 
     @GET
     @Path("search")
+    @Produces(MediaType.APPLICATION_JSON)
     public List<CustomerInfoDto> searchByName(@QueryParam("name") String name) {
         return customerService.searchByName(name);
     }

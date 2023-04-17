@@ -248,7 +248,7 @@ public class CustomerService {
             customer.setActive(customerDto.isActive());
             customer.setEmail(customerDto.getEmail());
             customer.setFirstName(customerDto.getFirstName());
-            customer.setLastName(customer.getLastName());
+            customer.setLastName(customerDto.getLastName());
 
             isSaved = customerDAO.saveRow(customer);
         }

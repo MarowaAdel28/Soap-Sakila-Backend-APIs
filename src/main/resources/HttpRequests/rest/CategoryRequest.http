@@ -14,16 +14,16 @@ POST http://localhost:8070/apis/rest/categories
 Content-Type: application/json
 
 {
-  "categoryName": "Youth"
+  "categoryName": "Youth4"
 }
 
 ###
 
-PUT http://localhost:8070/apis/rest/categories/18
+PUT http://localhost:8070/apis/rest/categories/21
 Content-Type: application/json
 
 {
-  "categoryName": "youth"
+  "categoryName": "youth3"
 }
 
 

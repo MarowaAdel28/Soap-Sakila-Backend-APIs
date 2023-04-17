@@ -5,6 +5,8 @@ import gov.iti.jets.service.CategoryService;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 
 import java.util.List;
 
@@ -19,6 +21,7 @@ public class CategoryFilmResource {
 
     @GET
     @Path("{id:[0-9]+}")
+    @Produces(MediaType.APPLICATION_JSON)
     public List<FilmDto> getCategoryFilms(@PathParam("id") short id) {
         return categoryService.getCategoryFilms(id);
     }
