@@ -20,7 +20,7 @@ public class FilmDto implements Serializable {
     private Short filmId;
     private String title;
     private String description;
-    private Date releaseYear;
+    private int releaseYear;
     private short rentalDuration;
     private BigDecimal rentalRate;
     private Short length;

@@ -1,0 +1,88 @@
+POST http://localhost:8070/apis/soap/staff HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:AllStaffs/>
+    </soap:Body>
+</soap:Envelope>
+
+###
+
+POST http://localhost:8070/apis/soap/staff HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:StaffById>
+            <staffId>1</staffId>
+        </jets:StaffById>
+    </soap:Body>
+</soap:Envelope>
+
+###
+
+POST http://localhost:8070/apis/soap/staff HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:addStaff>
+            <staff>
+                <firstName>Amira</firstName>
+                <lastName>Ahmed</lastName>
+                <picture></picture>
+                <email>amira@gmail.com</email>
+                <active>true</active>
+                <username>amira-ahmed</username>
+                <password>123456</password>
+                <address>cairo</address>
+                <district>cairo</district>
+                <city>3</city>
+                <country>101</country>
+                <postalCode>45454</postalCode>
+                <phone>010214541</phone>
+                <storeID>4</storeID>
+            </staff>
+        </jets:addStaff>
+    </soap:Body>
+</soap:Envelope>
+
+###
+
+POST http://localhost:8070/apis/soap/staff HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:editStaff>
+            <staffId>3</staffId>
+            <staff>
+                <firstName>Omnia</firstName>
+                <lastName>Ahmed</lastName>
+                <picture></picture>
+                <email>omnia@gmail.com</email>
+                <active>true</active>
+                <username>omnia-ahmed</username>
+                <password>123456</password>
+                <address>cairo</address>
+                <district>cairo</district>
+                <city>3</city>
+                <country>101</country>
+                <postalCode>45454</postalCode>
+                <phone>010214541</phone>
+                <storeID>4</storeID>
+            </staff>
+        </jets:editStaff>
+    </soap:Body>
+</soap:Envelope>
+
+###

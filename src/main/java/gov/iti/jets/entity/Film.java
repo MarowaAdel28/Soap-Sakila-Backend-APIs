@@ -70,8 +70,9 @@ public class Film extends BaseEntity implements Serializable {
     private String description;
 
     @Column(name = "release_year")
-    @Temporal(TemporalType.DATE)
-    private Date releaseYear;
+    private int releaseYear;
+//    @Temporal(TemporalType.DATE)
+//    private Date releaseYear;
 
     @Basic(optional = false)
     @Column(name = "rental_duration")

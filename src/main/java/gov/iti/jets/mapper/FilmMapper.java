@@ -4,6 +4,7 @@ import gov.iti.jets.dto.FilmActorDto;
 import gov.iti.jets.dto.FilmDto;
 import gov.iti.jets.entity.Film;
 import gov.iti.jets.entity.FilmActor;
+import jakarta.annotation.Generated;
 import org.mapstruct.*;
 
 import java.util.ArrayList;
@@ -12,6 +13,8 @@ import java.util.Collection;
 import static java.util.stream.Collectors.toCollection;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.CDI)
+//@Generated("jakarta.annotation.Generated")
+@Generated(value = "jakarta.annotation.Generated")
 public interface FilmMapper {
     Film toEntity(FilmDto filmDto);
 

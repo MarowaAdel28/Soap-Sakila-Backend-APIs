@@ -48,4 +48,9 @@ public class FilmText extends BaseEntity implements Serializable {
     @Lob
     @Column(name = "description")
     private String description;
+
+    public FilmText(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
 }

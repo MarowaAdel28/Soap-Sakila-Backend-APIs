@@ -176,17 +176,17 @@ Content-Type: text/xml
     <soap:Body>
         <jets:AddCustomer>
             <customer>
-                <firstName>Mohga</firstName>
-                <lastName>Ahmed</lastName>
-                <email>mogy@gmail.com</email>
+                <firstName>shaimaa</firstName>
+                <lastName>Mohamed</lastName>
+                <email>shosho@gmail.com</email>
                 <active>true</active>
                 <address>Cairo</address>
-                <district>Misr El-Gedida</district>
+                <district>Shubra</district>
                 <city>3</city>
                 <country>101</country>
                 <postalCode>45454</postalCode>
                 <phone>010214541</phone>
-                <store>2</store>
+                <store>4</store>
             </customer>
         </jets:AddCustomer>
     </soap:Body>
@@ -206,9 +206,9 @@ Content-Type: text/xml
             <customer>
                 <firstName>Mohamed</firstName>
                 <lastName>Mustafa</lastName>
-                <email>mohamed111@gmail.com</email>
+                <email>mohamed222@gmail.com</email>
                 <active>true</active>
-                <address>LabLab</address>
+                <address>LabLab2</address>
                 <district>El-Salam</district>
                 <city>3</city>
                 <country>101</country>

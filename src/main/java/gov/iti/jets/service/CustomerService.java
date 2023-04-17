@@ -1,5 +1,7 @@
 package gov.iti.jets.service;
 
+import gov.iti.jets.custommapper.CustomPaymentMapper;
+import gov.iti.jets.custommapper.CustomRentalMapper;
 import gov.iti.jets.dao.*;
 import gov.iti.jets.dto.*;
 import gov.iti.jets.entity.*;
@@ -15,20 +17,19 @@ import java.util.List;
 public class CustomerService {
 
     private volatile static CustomerService customerService;
-    private CustomerMapper customerMapper;
 
-    private PaymentMapper paymentMapper;
+    private CustomPaymentMapper customPaymentMapper;
 
-    private RentalMapper rentalMapper;
+    private CustomRentalMapper customRentalMapper;
 
     private CustomerInfoMapper customerInfoMapper;
 
     private CustomerFormMapper customerFormMapper;
 
     private CustomerService() {
-        customerMapper = Mappers.getMapper(CustomerMapper.class);
-        paymentMapper = Mappers.getMapper(PaymentMapper.class);
-        rentalMapper = Mappers.getMapper(RentalMapper.class);
+
+        customPaymentMapper = CustomPaymentMapper.getInstance();
+        customRentalMapper = CustomRentalMapper.getInstance();
         customerInfoMapper = Mappers.getMapper(CustomerInfoMapper.class);
         customerFormMapper = Mappers.getMapper(CustomerFormMapper.class);
     }
@@ -94,15 +95,6 @@ public class CustomerService {
         return customerInfoDtoList;
     }
 
-//    public List<CustomerDto> getAllStoreCustomers(Short storeId) {
-//        DBFactory dbFactory = DBFactory.getDbFactoryInstance();
-//        EntityManager entityManager = dbFactory.createEntityManager();
-//        CustomerDAO customerDAO = new CustomerDAO(entityManager);
-//        List<Customer> customerList = customerDAO.getAllCustomersInStore(storeId);
-//        dbFactory.closeEntityManager(entityManager);
-//        return customerMapper.toDTOs(customerList);
-//    }
-
     public int getAllCustomersCount() {
         return getAllCustomers().size();
     }
@@ -115,16 +107,19 @@ public class CustomerService {
         return getAllInactiveCustomers().size();
     }
 
-//    public int getAllStoreCustomersCount(short storeId) {
-//        return getAllStoreCustomers(storeId).size();
-//    }
-
     public List<PaymentDto> getCustomerPayment(short customerId) {
         DBFactory dbFactory = DBFactory.getDbFactoryInstance();
         EntityManager entityManager = dbFactory.createEntityManager();
         CustomerDAO customerDAO = new CustomerDAO(entityManager);
-        List<Payment> paymentList = customerDAO.get(customerId).getPaymentList();
-        List<PaymentDto> paymentDtoList = paymentMapper.toDTOs(paymentList);
+        Customer customer = customerDAO.get(customerId);
+        if(customer == null) {
+            return null;
+        }
+        List<Payment> paymentList = customer.getPaymentList();
+        List<PaymentDto> paymentDtoList = new ArrayList<>();
+        paymentList.forEach(payment -> {
+            paymentDtoList.add(customPaymentMapper.toPaymentDto(payment));
+        });
         dbFactory.closeEntityManager(entityManager);
         return paymentDtoList;
     }
@@ -133,7 +128,12 @@ public class CustomerService {
         DBFactory dbFactory = DBFactory.getDbFactoryInstance();
         EntityManager entityManager = dbFactory.createEntityManager();
         CustomerDAO customerDAO = new CustomerDAO(entityManager);
-        List<Payment> paymentList = customerDAO.get(customerId).getPaymentList();
+
+        Customer customer = customerDAO.get(customerId);
+        if(customer == null) {
+            return new BigDecimal(0);
+        }
+        List<Payment> paymentList = customer.getPaymentList();
 
         BigDecimal totalAmount = paymentList.stream().map(Payment::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
 
@@ -146,8 +146,18 @@ public class CustomerService {
         DBFactory dbFactory = DBFactory.getDbFactoryInstance();
         EntityManager entityManager = dbFactory.createEntityManager();
         CustomerDAO customerDAO = new CustomerDAO(entityManager);
-        List<Rental> rentalList = customerDAO.get(customerId).getRentalList();
-        List<RentalDto> rentalDtoList = rentalMapper.toDTOs(rentalList);
+
+        Customer customer = customerDAO.get(customerId);
+        if(customer == null) {
+            return null;
+        }
+
+        List<Rental> rentalList = customer.getRentalList();
+        List<RentalDto> rentalDtoList = new ArrayList<>();
+
+        for (Rental rental : rentalList) {
+            rentalDtoList.add(customRentalMapper.toRentalDto(rental));
+        }
 
         dbFactory.closeEntityManager(entityManager);
 
@@ -158,7 +168,11 @@ public class CustomerService {
         EntityManager entityManager = dbFactory.createEntityManager();
         CustomerDAO customerDAO = new CustomerDAO(entityManager);
 
-        List<Rental> rentalList = customerDAO.get(customerId).getRentalList();
+        Customer customer = customerDAO.get(customerId);
+        if(customer == null) {
+            return 0;
+        }
+        List<Rental> rentalList = customer.getRentalList();
 
         int count = rentalList.size();
 
@@ -181,46 +195,28 @@ public class CustomerService {
     }
 
     public boolean addCustomer(CustomerFormDto customerDto) {
-
+        boolean isSaved = false;
         DBFactory dbFactory = DBFactory.getDbFactoryInstance();
         EntityManager entityManager = dbFactory.createEntityManager();
 
         CustomerDAO customerDAO = new CustomerDAO(entityManager);
-        CityDAO cityDAO = new CityDAO(entityManager);
-        CountryDAO countryDAO = new CountryDAO(entityManager);
-        AddressDAO addressDAO = new AddressDAO(entityManager);
         StoreDAO storeDAO = new StoreDAO(entityManager);
 
-        City city = cityDAO.get(customerDto.getCity());
-
-        Country country = countryDAO.get(customerDto.getCountry());
-
         Store store = storeDAO.get(customerDto.getStore());
-
-        if(store==null || country ==null || city==null) {
-//            System.out.println("store is null");
-            return false;
-        }
-//        Address address = saveOrUpdateAddress(false,customerDto,city,null,addressDAO);
-        Address address = customerFormMapper.toAddressEntity(customerDto);
-        address.setCityId(city);
-        address.setLastUpdate(new Date());
-
-        if(!addressDAO.save(address)) {
-            System.out.println("can't save address is null");
-            return false;
-        }
-
         Customer customer = customerFormMapper.toEntity(customerDto);
 
-//        customer.setLastUpdate(new Date());
-        customer.setAddressId(address);
-        customer.setStoreId(store);
-        boolean isSaved = customerDAO.save(customer);
+        entityManager.getTransaction().begin();
 
+        Address address = addAddress(entityManager,customerDto);
+
+        if(address != null) {
+
+            customer.setAddressId(address);
+            customer.setStoreId(store);
+            isSaved = customerDAO.saveRow(customer);
+        }
+        dbFactory.commitTransaction(entityManager,isSaved);
         dbFactory.closeEntityManager(entityManager);
-
-//        System.out.println(customer.getCreateDate());
 
         return isSaved;
 
@@ -228,57 +224,38 @@ public class CustomerService {
 
     public boolean editCustomer(Short id, CustomerFormDto customerDto) {
 
+        boolean isSaved = false;
         DBFactory dbFactory = DBFactory.getDbFactoryInstance();
         EntityManager entityManager = dbFactory.createEntityManager();
 
         CustomerDAO customerDAO = new CustomerDAO(entityManager);
-        CityDAO cityDAO = new CityDAO(entityManager);
-        CountryDAO countryDAO = new CountryDAO(entityManager);
-        AddressDAO addressDAO = new AddressDAO(entityManager);
         StoreDAO storeDAO = new StoreDAO(entityManager);
 
-        City city = cityDAO.get(customerDto.getCity());
-
-        Country country = countryDAO.get(customerDto.getCountry());
+        entityManager.getTransaction().begin();
 
         Store store = storeDAO.get(customerDto.getStore());
 
-        Short originalAddressId = customerDAO.get(id).getAddressId().getAddressId();
+        Customer customer = customerDAO.get(id);
 
-        Date customerCreateDate = customerDAO.get(id).getCreateDate();
+        Short originalAddressId = customer.getAddressId().getAddressId();
 
-        if(store==null || country ==null || city==null) {
-//            System.out.println("store is null");
-            return false;
+        Address address = editAddress(entityManager,customerDto,originalAddressId);
+
+        if(address!=null) {
+            customer.setLastUpdate(new Date());
+            customer.setAddressId(address);
+            customer.setStoreId(store);
+            customer.setActive(customerDto.isActive());
+            customer.setEmail(customerDto.getEmail());
+            customer.setFirstName(customerDto.getFirstName());
+            customer.setLastName(customerDto.getLastName());
+
+            isSaved = customerDAO.saveRow(customer);
         }
-
-//        Address address = saveOrUpdateAddress(false,customerDto,city,originalAddressId,addressDAO);
-
-        Address address = customerFormMapper.toAddressEntity(customerDto);
-        address.setCityId(city);
-        address.setLastUpdate(new Date());
-
-        address.setAddressId(originalAddressId);
-
-        if (!addressDAO.update(address)) {
-            System.out.println("can't update address is null");
-            return false;
-        }
-
-        Customer customer = customerFormMapper.toEntity(customerDto);
-
-        customer.setLastUpdate(new Date());
-        customer.setAddressId(address);
-        customer.setStoreId(store);
-        customer.setCustomerId(id);
-        customer.setCreateDate(customerCreateDate);
-
-        boolean isSaved = customerDAO.update(customer);
-
+        dbFactory.commitTransaction(entityManager,isSaved);
         dbFactory.closeEntityManager(entityManager);
 
         return isSaved;
-
     }
 
     private List<CustomerInfoDto> toDtos(List<Customer> customerList) {
@@ -295,24 +272,40 @@ public class CustomerService {
         return customerInfoDtoList;
     }
 
-//    private Address saveOrUpdateAddress(boolean isSave, CustomerFormDto customerDto,City city,Short addressId, AddressDAO addressDAO) {
-//        Address address = customerFormMapper.toAddressEntity(customerDto);
-//        address.setCityId(city);
-//        address.setLastUpdate(new Date());
-//
-//        if(!isSave) {
-//            address.setAddressId(addressId);
-//
-//            if (!addressDAO.update(address)) {
-//                System.out.println("can't update address is null");
-//                return null;
-//            }
-//        } else if (isSave) {
-//            if(!addressDAO.save(address)) {
-//                System.out.println("can't save address is null");
-//                return null;
-//            }
-//        }
-//        return address;
-//    }
+    private Address addAddress(EntityManager entityManager, CustomerFormDto customerDto) {
+        CityDAO cityDAO = new CityDAO(entityManager);
+        AddressDAO addressDAO = new AddressDAO(entityManager);
+
+        City city = cityDAO.get(customerDto.getCity());
+
+        Address address = customerFormMapper.toAddressEntity(customerDto);
+        address.setCityId(city);
+        address.setLastUpdate(new Date());
+
+        if(addressDAO.saveRow(address)) {
+            return address;
+        }
+        return null;
+    }
+
+    private Address editAddress(EntityManager entityManager, CustomerFormDto customerFormDto, Short addressId) {
+        CityDAO cityDAO = new CityDAO(entityManager);
+        AddressDAO addressDAO = new AddressDAO(entityManager);
+
+        City city = cityDAO.get(customerFormDto.getCity());
+
+        Address address = addressDAO.get(addressId);
+
+        address.setDistrict(customerFormDto.getDistrict());
+        address.setAddress(customerFormDto.getAddress());
+        address.setPhone(customerFormDto.getPhone());
+        address.setPostalCode(customerFormDto.getPostalCode());
+        address.setCityId(city);
+        address.setLastUpdate(new Date());
+
+        if(addressDAO.saveRow(address)) {
+            return address;
+        }
+        return null;
+    }
 }

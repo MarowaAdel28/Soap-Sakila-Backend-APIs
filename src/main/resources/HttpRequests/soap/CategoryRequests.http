@@ -50,7 +50,7 @@ xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
     xmlns:jets="http://services.soap.api.jets.iti.gov/">
     <soap:Body>
     <jets:CategoryFilms>
-    <categoryId>1</categoryId>
+    <categoryId>5</categoryId>
     </jets:CategoryFilms>
     </soap:Body>
 </soap:Envelope>
@@ -66,5 +66,48 @@ Content-Type: text/xml
         <jets:NoOfCategoryFilms>
             <categoryId>1</categoryId>
         </jets:NoOfCategoryFilms>
+    </soap:Body>
+</soap:Envelope>
+
+###
+POST http://localhost:8070/apis/soap/category HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:NoOfCategoryFilms>
+            <categoryId>1</categoryId>
+        </jets:NoOfCategoryFilms>
+    </soap:Body>
+</soap:Envelope>
+
+###
+POST http://localhost:8070/apis/soap/category HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:addCategory>
+            <categoryName>Kids2</categoryName>
+        </jets:addCategory>
+    </soap:Body>
+</soap:Envelope>
+
+###
+POST http://localhost:8070/apis/soap/category HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:editCategory>
+            <categoryId>20</categoryId>
+            <categoryName>Kides2</categoryName>
+        </jets:editCategory>
     </soap:Body>
 </soap:Envelope>

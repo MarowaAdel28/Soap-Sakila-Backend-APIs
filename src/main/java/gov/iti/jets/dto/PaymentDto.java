@@ -16,9 +16,15 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 @XmlRootElement
+
 public class PaymentDto implements Serializable {
     private Short paymentId;
     private BigDecimal amount;
     private Date paymentDate;
     private Date lastUpdate;
+    private Short customerID;
+    private String customerName;
+    private Integer rental;
+    private Short staff;
+    private String staffName;
 }

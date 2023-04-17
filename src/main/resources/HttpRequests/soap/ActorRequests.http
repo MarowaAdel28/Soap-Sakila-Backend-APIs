@@ -37,7 +37,7 @@ Content-Type: text/xml
         xmlns:jets="http://services.soap.api.jets.iti.gov/">
     <soap:Body>
         <jets:searchByName>
-            <actorName>CUBA</actorName>
+            <actorName>ZORRO ARK S2</actorName>
         </jets:searchByName>
     </soap:Body>
 </soap:Envelope>
@@ -147,8 +147,8 @@ Content-Type: text/xml
     <soap:Body>
         <jets:AddNewActor>
             <ActorObject>
-                <firstName>Waffa</firstName>
-                <lastName>Ammer</lastName>
+                <firstName>Donia</firstName>
+                <lastName>Samir Ghanm</lastName>
             </ActorObject>
         </jets:AddNewActor>
     </soap:Body>
@@ -164,10 +164,10 @@ Content-Type: text/xml
         xmlns:jets="http://services.soap.api.jets.iti.gov/">
     <soap:Body>
         <jets:EditActor>
-            <ActorId>207</ActorId>
+            <ActorId>209</ActorId>
             <ActorObject>
-                <firstName>Ahmed</firstName>
-                <lastName>Zaki</lastName>
+                <firstName>Donia</firstName>
+                <lastName>SamirGhanm</lastName>
                 <lastUpdate/>
             </ActorObject>
         </jets:EditActor>

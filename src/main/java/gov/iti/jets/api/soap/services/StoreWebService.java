@@ -1,9 +1,6 @@
 package gov.iti.jets.api.soap.services;
 
-import gov.iti.jets.dto.CustomerInfoDto;
-import gov.iti.jets.dto.InventoryDto;
-import gov.iti.jets.dto.StaffDto;
-import gov.iti.jets.dto.StoreDto;
+import gov.iti.jets.dto.*;
 import gov.iti.jets.service.StoreService;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
@@ -39,5 +36,13 @@ public class StoreWebService {
     @WebMethod(operationName = "StoreInventoryList")
     public List<InventoryDto> getStoreInventoryList(@WebParam(name = "StoreId") Short storeId) {
         return storeService.getStoreInventoryList(storeId);
+    }
+
+    public boolean addStore(@WebParam(name = "store") StoreFormDto storeFormDto) {
+        return storeService.addStore(storeFormDto);
+    }
+
+    public boolean editStore(@WebParam(name = "storeId") Short storeId, @WebParam(name = "store") StoreFormDto storeFormDto) {
+        return storeService.editStore(storeId,storeFormDto);
     }
 }

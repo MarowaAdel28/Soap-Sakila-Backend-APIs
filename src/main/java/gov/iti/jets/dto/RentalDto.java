@@ -20,4 +20,9 @@ public class RentalDto implements Serializable {
     private Date rentalDate;
     private Date returnDate;
     private Date lastUpdate;
+    private Short customerID;
+    private String customerName;
+    private Short staffID;
+    private String staffName;
+    private Integer InventoryID;
 }
