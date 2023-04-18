@@ -30,11 +30,15 @@ for more details about it you can visit this link
 ```
 - clone the project 
 ```
-https://github.com/MarowaAdel28/Soap-Sakila-Backend-APIs.git
+    git clone https://github.com/MarowaAdel28/Soap-Sakila-Backend-APIs.git
 ```
 - go to the project directory 
 ```
     cd Soap-Sakila-Backend-APIs
+```
+- you will find http requests in:
+```
+    src/main/resources/HttpRequests/soap
 ```
 - Create db user and set the username and password values in the persistence.xml.
 - Create db named sakila in your MySql Server.
