@@ -1,16 +1,13 @@
-# Soap-Rest Backend APIs For Sakilla DataBase 
+# Soap Backend APIs For Sakilla DataBase 
 
 Welcome to the Sakila Database Backend APIs!
 
-This project provides REST and SOAP APIs for accessing data in the Sakila Database. The Sakila Database is a sample database used by many developers to learn and practice working with databases. This project provides APIs for interacting with various tables in the Sakila Database such as Actor, Customer, Category, City, Film, Inventory, Language, Payment, Rental, Staff and Store.
+This project provides SOAP APIs for accessing data in the Sakila Database. The Sakila Database is a sample database used by many developers to learn and practice working with databases. This project provides APIs for interacting with various tables in the Sakila Database such as Actor, Customer, Category, City, Film, Inventory, Language, Payment, Rental, Staff and Store.
 
 ****
 
 ## Technology Used
 - JAX-WS
-- JAX-RS (Jersey)
-- JSON-B
-- JAX-B
 - Maven
 - Lombok
 - MapStruct
@@ -33,11 +30,11 @@ for more details about it you can visit this link
 ```
 - clone the project 
 ```
-https://github.com/MarowaAdel28/Soap-Rest-Sakila-Backend-APIs.git
+https://github.com/MarowaAdel28/Soap-Sakila-Backend-APIs.git
 ```
 - go to the project directory 
 ```
-    cd Soap-Rest-Sakila-Backend-APIs
+    cd Soap-Sakila-Backend-APIs
 ```
 - Create db user and set the username and password values in the persistence.xml.
 - Create db named sakila in your MySql Server.
