@@ -45,4 +45,9 @@ public class RentalWebService {
     public List<PaymentDto> getPaymentList(@WebParam(name = "rentalId") Short id) {
         return rentalService.getPaymentList(id);
     }
+
+    @WebMethod(operationName = "DeleteRental")
+    public boolean deleteRental(@WebParam(name = "rentalId") Integer id) {
+        return rentalService.deleteRental(id);
+    }
 }

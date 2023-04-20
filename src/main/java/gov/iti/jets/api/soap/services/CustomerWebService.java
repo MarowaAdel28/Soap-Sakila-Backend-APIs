@@ -95,4 +95,9 @@ public class CustomerWebService {
 //        System.out.println("enter add customer web service");
         return customerService.editCustomer(id,customerDto);
     }
+
+    @WebMethod(operationName = "DeleteCustomer")
+    public boolean deleteCustomer(@WebParam(name = "customerId") Short id) {
+        return customerService.deleteCustomer(id);
+    }
 }

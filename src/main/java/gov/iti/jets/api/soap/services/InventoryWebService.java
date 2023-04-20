@@ -44,4 +44,9 @@ public class InventoryWebService {
         return inventoryService.getStoreFilms(storeId);
     }
 
+    @WebMethod(operationName = "DeleteInventory")
+    public boolean deleteInventory(@WebParam(name = "inventoryId") Short id) {
+        return inventoryService.deleteInventory(id);
+    }
+
 }

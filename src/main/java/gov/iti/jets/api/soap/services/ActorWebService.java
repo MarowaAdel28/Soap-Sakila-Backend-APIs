@@ -63,4 +63,9 @@ public class ActorWebService {
     public boolean editActor(@WebParam(name = "ActorId")short id, @WebParam(name = "ActorObject") ActorFormDto actorDto) {
         return actorService.editActor(id,actorDto);
     }
+
+    @WebMethod(operationName = "DeleteActor")
+    public boolean deleteActor(@WebParam(name = "actorId") Short id) {
+        return actorService.deleteActor(id);
+    }
 }

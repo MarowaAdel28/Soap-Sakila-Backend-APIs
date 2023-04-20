@@ -37,4 +37,8 @@ public class FilmWebService {
         return filmService.addFilm(filmFormDto);
     }
 
+    @WebMethod(operationName = "DeleteFilm")
+    public boolean deleteFilm(@WebParam(name = "filmId") Short id) {
+        return filmService.deleteFilm(id);
+    }
 }

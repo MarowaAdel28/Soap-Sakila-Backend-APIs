@@ -60,3 +60,18 @@ Content-Type: text/xml
         </jets:editLanguage>
     </soap:Body>
 </soap:Envelope>
+
+###
+
+POST http://localhost:8070/apis/soap/language HTTP/1.1
+Content-Type: text/xml
+
+<soap:Envelope
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+        xmlns:jets="http://services.soap.api.jets.iti.gov/">
+    <soap:Body>
+        <jets:DeleteLanguage>
+            <languageId>1</languageId>
+        </jets:DeleteLanguage>
+    </soap:Body>
+</soap:Envelope>
