@@ -45,4 +45,9 @@ public class StoreWebService {
     public boolean editStore(@WebParam(name = "storeId") Short storeId, @WebParam(name = "store") StoreFormDto storeFormDto) {
         return storeService.editStore(storeId,storeFormDto);
     }
+
+    @WebMethod(operationName = "DeleteStore")
+    public boolean deleteStore(@WebParam(name = "storeId") Short id) {
+        return storeService.deleteStore(id);
+    }
 }

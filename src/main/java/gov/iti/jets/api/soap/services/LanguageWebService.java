@@ -40,4 +40,9 @@ public class LanguageWebService {
     public boolean editLanguage(@WebParam(name = "languageId") Short languageId, @WebParam(name = "language") LanguageFormDto languageFormDto) {
         return languageService.editLanguage(languageId,languageFormDto.getName());
     }
+
+    @WebMethod(operationName = "DeleteLanguage")
+    public boolean deleteLanguage(@WebParam(name = "languageId") Short id) {
+        return languageService.deleteLanguage(id);
+    }
 }

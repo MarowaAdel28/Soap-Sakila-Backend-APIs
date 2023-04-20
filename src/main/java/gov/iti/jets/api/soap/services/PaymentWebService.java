@@ -34,6 +34,10 @@ public class PaymentWebService {
     @WebMethod(operationName = "count")
     public int count() {
         return paymentService.getAll().size();
+    }
 
+    @WebMethod(operationName = "DeletePayment")
+    public boolean deletePayment(@WebParam(name = "paymentId") Short id) {
+        return paymentService.deletePayment(id);
     }
 }

@@ -48,4 +48,9 @@ public class CategoryWebService {
     public boolean editCategory(@WebParam(name = "categoryId") Short categoryId, @WebParam(name = "categoryName") String categoryName) {
         return categoryService.editCategory(categoryId,categoryName);
     }
+
+    @WebMethod(operationName = "DeleteCategory")
+    public boolean deleteCategory(@WebParam(name = "categoryId") Short id) {
+        return categoryService.deleteCategory(id);
+    }
 }

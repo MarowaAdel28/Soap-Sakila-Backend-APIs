@@ -39,4 +39,9 @@ public class StaffWebService {
     public boolean editStaff(@WebParam(name = "staffId") Short staffId, @WebParam(name = "staff") StaffFormDto staffFormDto) {
         return service.editStaff(staffId,staffFormDto);
     }
+
+    @WebMethod(operationName = "DeleteStaff")
+    public boolean deleteStaff(@WebParam(name = "staffId") Short id) {
+        return service.deleteStaff(id);
+    }
 }

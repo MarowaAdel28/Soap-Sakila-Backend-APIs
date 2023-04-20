@@ -94,6 +94,18 @@ public abstract class BaseDAO <E extends Object>{
         return true;
     }
 
+    public  boolean delete(E entity) {
+        try{
+            entityManager.remove(entity);
+        } catch (Exception e) {
+            System.out.println("catching exception " + entity.getClass().getName());
+            System.out.println("----------------------------------------");
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
     public void merge(E entity)
     {
         entityManager.getTransaction().begin();
