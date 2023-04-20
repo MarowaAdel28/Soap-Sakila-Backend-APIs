@@ -6,6 +6,11 @@ This project provides SOAP APIs for accessing data in the Sakila Database. The S
 
 ****
 
+## Documentation
+[Postman Soap API](https://documenter.getpostman.com/view/26734931/2s93Y3ufto)
+
+****
+
 ## Technology Used
 - JAX-WS
 - Maven
